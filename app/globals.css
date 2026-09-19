@@ -1,0 +1,432 @@
+@import "tailwindcss";
+
+@theme {
+  --color-glass-bg: rgba(255, 255, 255, 0.6);
+  --color-glass-border: rgba(209, 213, 219, 0.5);
+  --color-accent: #2d6a4f;
+  --color-accent-light: #52b788;
+  --color-surface: #f8f9fb;
+  --font-sans: "Inter", sans-serif;
+  --font-display: "Plus Jakarta Sans", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+}
+
+:root {
+  --background: #ffffff;
+  --foreground: #1d1d1f;
+}
+
+/* ─── Base ─────────────────────────────────────────────────────────────────── */
+
+html {
+  scroll-behavior: auto; /* Lenis handles smooth scrolling */
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─── Lenis Smooth Scroll ─────────────────────────────────────────────────── */
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-scrolling iframe {
+  pointer-events: none;
+}
+
+/* ─── Scrollbar ───────────────────────────────────────────────────────────── */
+
+::-webkit-scrollbar {
+  display: none;
+}
+body {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* ─── Selection ───────────────────────────────────────────────────────────── */
+
+::selection {
+  background: rgba(29, 29, 31, 0.12);
+  color: #1d1d1f;
+}
+
+/* ─── Glassmorphism utilities ─────────────────────────────────────────────── */
+
+.glass {
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  border: 1px solid rgba(255, 255, 255, 0.4);
+}
+
+.glass-heavy {
+  background: rgba(255, 255, 255, 0.75);
+  backdrop-filter: blur(60px);
+  -webkit-backdrop-filter: blur(60px);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow:
+    0 25px 80px rgba(0, 0, 0, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+/* ─── Custom Animations ───────────────────────────────────────────────────── */
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-glow {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-float {
+  animation: float 6s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background-size: 200% 100%;
+  animation: shimmer 3s linear infinite;
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+/* ─── Line clamp utility ──────────────────────────────────────────────────── */
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.line-clamp-3 {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+/* ─── Preloader ───────────────────────────────────────────────────────────── */
+
+@keyframes logo-pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+@keyframes preloader-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.preloader-logo {
+  animation: logo-pulse 2s ease-in-out infinite;
+}
+
+.preloader-ring {
+  animation: preloader-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+}
+
+/* ========== HERO V3 ANIMATIONS ========== */
+
+@keyframes heroPulseDot {
+  0%   { box-shadow: 0 0 0 0   rgba(82, 183, 136, 0.8); }
+  70%  { box-shadow: 0 0 0 8px rgba(82, 183, 136, 0);   }
+  100% { box-shadow: 0 0 0 0   rgba(82, 183, 136, 0);   }
+}
+
+@keyframes meshDrift1 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%       { transform: translate(60px, -40px) scale(1.1); }
+  66%       { transform: translate(-30px, 50px) scale(0.95); }
+}
+
+@keyframes meshDrift2 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  40%       { transform: translate(-70px, 30px) scale(1.05); }
+  70%       { transform: translate(40px, -60px) scale(1.1); }
+}
+
+@keyframes meshDrift3 {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%       { transform: translate(50px, 40px) scale(0.9); }
+}
+
+@keyframes heroTickerLeft {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes heroTickerRight {
+  0%   { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
+}
+
+@keyframes heroTickerScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes heroCursorBlink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+@keyframes presenceRipple {
+  0%   { transform: scale(1);   opacity: 0.55; }
+  100% { transform: scale(2.6); opacity: 0;    }
+}
+
+@keyframes alivePulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(82,183,136,0.55); }
+  50%       { box-shadow: 0 0 0 6px rgba(82,183,136,0); }
+}
+
+@keyframes aliveType {
+  0%, 60%, 100% { transform: translateY(0);   opacity: 0.4; }
+  30%            { transform: translateY(-3px); opacity: 1;   }
+}
+
+@keyframes heroPulseDot {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(82,183,136,0.55); }
+  50%       { box-shadow: 0 0 0 7px rgba(82,183,136,0); }
+}
+
+@keyframes scrollProgress {
+  0%   { transform: scaleX(0); }
+  100% { transform: scaleX(1); }
+}
+
+@keyframes seamShimmer {
+  0%, 100% { opacity: 0.85; }
+  50%       { opacity: 1;    }
+}
+
+@keyframes sliderAutoTease {
+  0%   { left: 50%; }
+  40%  { left: 28%; }
+  75%  { left: 50%; }
+  100% { left: 50%; }
+}
+
+/* ========== SECTIONS BELOW HERO ========== */
+
+/* Smooth section transitions */
+section + section {
+  position: relative;
+}
+
+/* Prevent grid from breaking on style jsx overrides */
+@media (max-width: 768px) {
+  .about-grid {
+    grid-template-columns: 1fr !important;
+    gap: 40px !important;
+  }
+}
+
+/* ========== LIGHT THEME SECTIONS ========== */
+/* Smooth link hover transitions */
+a {
+  transition:
+    opacity 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+a:active {
+  transform: scale(0.97);
+}
+
+/* Button hover states */
+a[style*="background: #1d1d1f"]:hover {
+  background: #424245 !important;
+}
+
+a[style*="background: transparent"]:hover {
+  background: rgba(0, 0, 0, 0.04) !important;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ========== WEBSITE CARDS HOVER ENHANCEMENTS ========== */
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateX(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.website-card {
+  border-top: 2px solid transparent !important;
+  transition:
+    border-color 0.4s ease,
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.4s ease !important;
+}
+
+.website-card:hover {
+  border-top: 2px solid var(--accent-color) !important;
+  box-shadow:
+    0 4px 12px rgba(0, 0, 0, 0.05),
+    0 20px 60px rgba(0, 0, 0, 0.1),
+    0 0 30px var(--accent-glow) !important;
+}
+
+.website-card:hover .browser-chrome-dots {
+  opacity: 1 !important;
+}
+
+.website-card:hover .browser-chrome-url {
+  color: #666 !important;
+}
+
+.website-card:hover .browser-chrome-bar {
+  border-bottom: 2px solid var(--accent-glow) !important;
+}
+
+.website-card:hover .preview-content {
+  transform: scale(1.02);
+}
+
+.preview-content {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  width: 100%;
+  height: 100%;
+}
+
+.btn-primary.with-shine {
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-primary.with-shine::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.15) 50%,
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+
+.btn-primary.with-shine:hover::after {
+  left: 100%;
+}
+
+/* ========== CONTACT SECTION BUTTONS ========== */
+
+.cta-primary {
+  background: #2d6a4f;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+}
+.cta-primary:hover {
+  background: #3a8a64;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(45, 106, 79, 0.25);
+}
+.cta-primary:active {
+  transform: scale(0.97);
+}
+/* Shine sweep */
+.cta-primary::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    120deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 100%
+  );
+  transition: left 0.5s ease;
+}
+.cta-primary:hover::after {
+  left: 100%;
+}
+
+.cta-ghost {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+.cta-ghost:hover {
+  border-color: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.05);
+}
+.cta-ghost:active {
+  transform: scale(0.97);
+}
