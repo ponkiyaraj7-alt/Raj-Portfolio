@@ -24,15 +24,15 @@ const codeLines = [
   { id: 14, content: '    "Workflow & Process Automation",', type: "string" },
   { id: 15, content: '    "RAG & Semantic Retrieval"', type: "string" },
   { id: 16, content: "  ],", type: "close" },
-  { id: 17, content: "  stats: {", type: "nested" },
-  { id: 18, content: "    aiIntegrations: 12,", type: "property" },
-  { id: 19, content: '    workflowOptimization: "High",', type: "property" },
-  { id: 20, content: '    philosophy: "Turn manual processes into intelligent automation"', type: "property" },
+  { id: 17, content: "  philosophy: {", type: "nested" },
+  { id: 18, content: '    approach: "Understand process -> Apply AI -> Automate tools",', type: "property" },
+  { id: 19, content: '    objective: "Measurable, reliable execution",', type: "property" },
+  { id: 20, content: '    core: "Turn repetitive manual work into automated workflows"', type: "property" },
   { id: 21, content: "  }", type: "close" },
   { id: 22, content: "};", type: "close" },
   { id: 23, content: "", type: "empty" },
-  { id: 24, content: "// Currently building: Autonomous AI workflows", type: "comment" },
-  { id: 25, content: "// Available for: AI automation & LLM consulting", type: "comment" },
+  { id: 24, content: "// Currently building: Practical AI & agentic systems", type: "comment" },
+  { id: 25, content: "// Available for: AI automation & intelligent workflow engineering", type: "comment" },
 ];
 
 // Syntax highlighting colors

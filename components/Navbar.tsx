@@ -9,8 +9,13 @@ import AudioToggle from "@/components/hero/AudioToggle";
 import { sounds } from "@/lib/audio";
 
 const LINKS = [
-  { id: "stack", label: "Skills" },
-  { id: "work", label: "Work" },
+  { id: "system", label: "System" },
+  { id: "capabilities", label: "Capabilities" },
+  { id: "experience", label: "Experience" },
+  { id: "work", label: "Projects" },
+  { id: "playground", label: "Lab" },
+  { id: "stack", label: "Stack" },
+  { id: "about", label: "About" },
 ];
 
 export default function Navbar() {
@@ -77,63 +82,62 @@ export default function Navbar() {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.6, delay: 0.25 }}
       style={{
-        position: "fixed", top: "20px", left: "50%",
+        position: "fixed", top: "18px", left: "50%",
         transform: "translateX(-50%)", zIndex: 50,
-        background: dark
-          ? "rgba(15,17,23,0.55)"
-          : scrolled ? "rgba(255,255,255,0.82)" : "rgba(255,255,255,0.30)",
-        backdropFilter: "blur(24px) saturate(180%)",
-        WebkitBackdropFilter: "blur(24px) saturate(180%)",
-        border: dark ? "1px solid rgba(255,255,255,0.10)" : "1px solid rgba(0,0,0,0.08)",
+        background: scrolled ? "rgba(255, 255, 255, 0.92)" : "rgba(255, 255, 255, 0.82)",
+        backdropFilter: "blur(20px) saturate(180%)",
+        WebkitBackdropFilter: "blur(20px) saturate(180%)",
+        border: "1px solid #e2e5e9",
         borderRadius: "100px",
-        padding: "6px 8px",
+        padding: "5px 8px",
         boxShadow: scrolled
-          ? "0 8px 30px rgba(0,0,0,0.10)"
-          : dark ? "0 8px 40px rgba(0,0,0,0.35)" : "0 4px 20px rgba(0,0,0,0.04)",
-        transition: "background 0.5s ease, border-color 0.5s ease, box-shadow 0.5s ease",
-        overflow: "hidden",
+          ? "0 8px 30px rgba(17,19,24,0.06), 0 1px 3px rgba(17,19,24,0.04)"
+          : "0 4px 20px rgba(17,19,24,0.03)",
+        transition: "all 0.3s ease",
       }}
     >
       {/* Scroll-progress hairline */}
       <div
         aria-hidden
         style={{
-          position: "absolute", top: 0, left: 0, right: 0, height: 1.5,
+          position: "absolute", top: 0, left: 0, right: 0, height: 2,
           transformOrigin: "left center",
           transform: `scaleX(${progress})`,
-          background: "linear-gradient(90deg, #52b788, #38bdf8)",
+          background: "linear-gradient(90deg, #2563eb, #6366f1)",
           opacity: progress > 0.01 ? 1 : 0,
           transition: "transform 0.12s linear, opacity 0.3s ease",
           pointerEvents: "none",
         }}
       />
 
-      <div className="portfolio-nav-inner" style={{ display: "flex", alignItems: "center", gap: 4, position: "relative" }}>
-        {/* Logo */}
+      <div className="portfolio-nav-inner" style={{ display: "flex", alignItems: "center", gap: 6, position: "relative" }}>
+        {/* Logo: RAJ.PONKIYA */}
         <Link
           href="/"
           data-cursor="click"
           onClick={handleHomeClick}
           onMouseEnter={() => sounds.hover()}
           style={{
-            padding: "8px 16px", borderRadius: "100px",
-            fontSize: "15px", fontWeight: 700,
-            color: dark ? "#ffffff" : "#0f172a",
+            padding: "6px 14px", borderRadius: "100px",
+            fontSize: "12.5px", fontWeight: 700,
+            color: "#111318",
             textDecoration: "none",
-            fontFamily: "var(--font-display), sans-serif",
-            letterSpacing: "-0.025em",
-            transition: "color 0.4s ease",
-            display: "inline-flex", alignItems: "baseline", gap: 1,
+            fontFamily: "var(--font-mono), monospace",
+            letterSpacing: "0.06em",
+            textTransform: "uppercase",
+            transition: "color 0.2s ease",
+            display: "inline-flex", alignItems: "center", gap: 3,
           }}
         >
-          <span className="nav-logo-n" style={{ display: "inline-block", transition: "transform 0.5s cubic-bezier(0.16,1,0.3,1)" }}>R</span>
-          <span>aj</span>
+          <span>RAJ</span>
+          <span style={{ color: "#2563eb" }}>.</span>
+          <span>PONKIYA</span>
         </Link>
 
         <div className="nav-divider-primary" style={{
           width: 1, height: 16, margin: "0 4px",
-          background: dark ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.10)",
-          transition: "background 0.4s ease",
+          background: "#e2e5e9",
+          transition: "background 0.3s ease",
         }} />
 
         {/* Links wrapper with magnetic pill */}
@@ -146,11 +150,11 @@ export default function Navbar() {
               position: "absolute", top: "50%",
               left: pill ? pill.x : 0,
               width: pill ? pill.w : 0,
-              height: 30,
+              height: 28,
               transform: "translateY(-50%)",
-              background: dark ? "rgba(255,255,255,0.10)" : "rgba(15,23,42,0.06)",
+              background: "rgba(37, 99, 235, 0.08)",
               borderRadius: 100,
-              transition: "left 0.35s cubic-bezier(0.16,1,0.3,1), width 0.35s cubic-bezier(0.16,1,0.3,1), opacity 0.25s ease",
+              transition: "left 0.25s cubic-bezier(0.16,1,0.3,1), width 0.25s cubic-bezier(0.16,1,0.3,1), opacity 0.2s ease",
               opacity: pill ? 1 : 0,
               pointerEvents: "none",
             }}
@@ -165,13 +169,13 @@ export default function Navbar() {
               onMouseEnter={() => { updatePill(i); sounds.hover(); }}
               style={{
                 position: "relative", zIndex: 1,
-                padding: "8px 14px", borderRadius: 100,
-                fontSize: 13, fontWeight: 500,
-                color: dark ? "rgba(255,255,255,0.78)" : "#475569",
+                padding: "6px 12px", borderRadius: 100,
+                fontSize: 12.5, fontWeight: 500,
+                color: "#5f6672",
                 textDecoration: "none",
                 fontFamily: "var(--font-inter), Inter, sans-serif",
                 letterSpacing: "-0.01em",
-                transition: "color 0.3s ease",
+                transition: "color 0.2s ease",
               }}
             >
               {l.label}
@@ -180,18 +184,42 @@ export default function Navbar() {
         </div>
 
         <div className="nav-divider-secondary" style={{
-          width: 1, height: 16, margin: "0 6px",
-          background: dark ? "rgba(255,255,255,0.18)" : "rgba(0,0,0,0.10)",
-          transition: "background 0.4s ease",
+          width: 1, height: 16, margin: "0 4px",
+          background: "#e2e5e9",
+          transition: "background 0.3s ease",
         }} />
 
-        {/* Presence chip — visible on >= 720px */}
-        <span className="nav-presence" style={{ display: "inline-flex" }}>
-          <PresenceChip dark={dark} />
-        </span>
+        {/* Technical Status Pill */}
+        <div
+          className="nav-presence"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            gap: 6,
+            padding: "4px 10px",
+            borderRadius: 100,
+            background: "#f1f3f5",
+            fontSize: 11,
+            fontWeight: 600,
+            color: "#111318",
+            fontFamily: "var(--font-mono), monospace",
+            letterSpacing: "0.04em",
+          }}
+        >
+          <span
+            style={{
+              width: 6,
+              height: 6,
+              borderRadius: "50%",
+              backgroundColor: "#2563eb",
+              boxShadow: "0 0 6px #2563eb",
+            }}
+          />
+          <span>OPEN</span>
+        </div>
 
-        <span className="nav-audio" style={{ marginLeft: 6 }}>
-          <AudioToggle dark={dark} />
+        <span className="nav-audio" style={{ marginLeft: 4 }}>
+          <AudioToggle dark={false} />
         </span>
 
         {/* Primary CTA */}
@@ -199,17 +227,18 @@ export default function Navbar() {
           href="/quote"
           data-cursor="click"
           onClick={() => sounds.click()}
-          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "#40916c"; sounds.hover(); }}
-          onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#2d6a4f")}
+          onMouseEnter={(e) => { (e.currentTarget as HTMLAnchorElement).style.background = "#1d4ed8"; sounds.hover(); }}
+          onMouseLeave={(e) => ((e.currentTarget as HTMLAnchorElement).style.background = "#2563eb")}
           style={{
-            marginLeft: 6,
-            padding: "9px 18px", borderRadius: 100,
-            fontSize: 13, fontWeight: 600,
-            background: "#2d6a4f", color: "#ffffff",
+            marginLeft: 4,
+            padding: "8px 16px", borderRadius: 100,
+            fontSize: 12.5, fontWeight: 600,
+            background: "#2563eb", color: "#ffffff",
             textDecoration: "none",
             fontFamily: "var(--font-inter), Inter, sans-serif",
             letterSpacing: "-0.01em",
-            transition: "background 0.25s ease",
+            boxShadow: "0 2px 8px rgba(37,99,235,0.25)",
+            transition: "all 0.2s ease",
           }}
         >
           Get Quote

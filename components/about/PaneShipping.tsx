@@ -24,12 +24,12 @@ type Entry = {
 };
 
 const ENTRIES: Entry[] = [
-  { type: "feat",  project: "web-app",         message: "Next.js routing optimization", ago: "4h ago",  recent: true  },
-  { type: "ship",  project: "dashboard",       message: "v2.0 — auth & performance",   ago: "1d ago",  recent: true  },
-  { type: "fix",   project: "portfolio",       message: "smooth scroll physics update",ago: "2d ago",  recent: true  },
-  { type: "feat",  project: "component-lib",   message: "dynamic UI interactions",     ago: "3d ago",  recent: false },
-  { type: "spec",  project: "client-project",  message: "architecture and API design", ago: "5d ago",  recent: false },
-  { type: "chore", project: "monorepo",        message: "build cache speedup",         ago: "1w ago",  recent: false },
+  { type: "feat",  project: "ai-platform",     message: "LangGraph state checkpointing", ago: "4h ago",  recent: true  },
+  { type: "ship",  project: "content-studio",  message: "pgvector similarity indexing",  ago: "1d ago",  recent: true  },
+  { type: "fix",   project: "cloudpulse",      message: "FastAPI stream chunking timeout", ago: "2d ago",  recent: true  },
+  { type: "feat",  project: "ai-agents",       message: "tool-calling retry circuit",     ago: "3d ago",  recent: false },
+  { type: "spec",  project: "rag-pipeline",    message: "hybrid dense/sparse retrieval",  ago: "5d ago",  recent: false },
+  { type: "chore", project: "automation",      message: "webhook ingestion telemetry",    ago: "1w ago",  recent: false },
 ];
 
 export default function PaneShipping() {

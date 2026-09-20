@@ -36,16 +36,29 @@ export async function routePIIToEmail(
   originalMessage: string,
   conversationSummary: string
 ) {
+  const accessKey =
+    process.env.WEB3FORMS_KEY ||
+    process.env.NEXT_PUBLIC_WEB3FORMS_KEY ||
+    "2357ad27-d2c0-47b1-84ff-bd1a8b3a3649";
+  if (!accessKey) {
+    console.warn("WEB3FORMS_KEY is not configured in .env.local. Client info detected:", {
+      recipient: "ponkiyaraj7@gmail.com",
+      emails,
+      phones,
+    });
+    return;
+  }
+
   try {
     const response = await fetch("https://api.web3forms.com/submit", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        access_key: process.env.WEB3FORMS_KEY,
+        access_key: accessKey,
         subject: "New Contact Info from Chat Assistant",
         from_name: "Portfolio Assistant",
         // Web3Forms requires a field named "email" to process the submission
-        email: emails[0] || "no-reply@portfolio.com",
+        email: emails[0] || "ponkiyaraj7@gmail.com",
         client_email: emails.join(", ") || "Not provided",
         client_phone: phones.join(", ") || "Not provided",
         original_message: originalMessage,

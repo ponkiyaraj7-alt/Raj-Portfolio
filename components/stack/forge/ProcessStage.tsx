@@ -7,7 +7,7 @@ import { useState, useRef } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 
 interface ProcessStageProps {
-  icon: string;
+  icon: React.ReactNode;
   title: string;
   descriptor: string;
   detail: string;

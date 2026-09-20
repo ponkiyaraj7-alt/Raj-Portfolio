@@ -7,7 +7,7 @@ import { useReducedMotion } from "../useReducedMotion";
 
 const MESSAGES = [
   { who: "Alex",  text: "How's the launch?",        time: "2:14" },
-  { who: "Sam",   text: "Voice memos shipping ✨",  time: "2:15" },
+  { who: "Sam",   text: "Voice memos shipping now", time: "2:15" },
   { who: "You",   text: "Transcribing live now",     time: "2:16" },
 ];
 

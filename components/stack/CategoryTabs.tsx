@@ -11,15 +11,14 @@ interface CategoryTabsProps {
   counts: Record<Category, number>;
 }
 
-const TABS: Category[] = ["All", "Web", "AI & GenAI", "Mobile", "Infra", "DesignOps"];
+const TABS: Category[] = ["All", "AI & LLMs", "Backend", "Frontend", "Data & Infra"];
 
 const TAB_COLORS: Record<Category, string> = {
-  "All":        "#52b788",
-  "Web":        "#61DAFB",
-  "AI & GenAI": "#A855F7",
-  "Mobile":     "#027DFD",
-  "Infra":      "#FFCA28",
-  "DesignOps":  "#F97316",
+  "All":          "#52b788",
+  "AI & LLMs":    "#A855F7",
+  "Backend":      "#3776AB",
+  "Frontend":     "#61DAFB",
+  "Data & Infra": "#4169E1",
 };
 
 export default function CategoryTabs({ active, onChange, counts }: CategoryTabsProps) {

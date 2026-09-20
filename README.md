@@ -44,14 +44,14 @@
 
 ## 🌟 Overview
 
-This portfolio is more than a static page — it's an **interactive experience** engineered to showcase full-stack and AI development skills through the very medium it's built with. Every section is intentional:
+This portfolio is engineered to showcase practical AI development, intelligent automation, and full-stack systems engineering. Every section communicates engineering capability:
 
-- **The hero** proves advanced animation engineering (300 canvas frames, GSAP scroll orchestration)
-- **The playground** proves creative coding ability (physics systems, particle engines)
-- **The work** proves real-world impact (6 shipped products across e-commerce, AI SaaS, and mobile)
-- **The stack** proves technical breadth (Next.js → React → TypeScript → Full-stack)
+- **The hero** communicates primary positioning: turning repetitive business processes into intelligent, automated workflows
+- **The stack** presents a practical AI & full-stack toolkit (LangGraph, LangChain, FastAPI, Next.js, pgvector)
+- **The work** demonstrates structured case studies (`Problem → Solution → AI Component → Automation → Technology → Outcome`)
+- **The interactive surfaces** ground complex logic into intuitive, responsive user experiences
 
-> *"I believe that the best software is not just functional, but deeply intuitive and beautifully crafted."*
+> *"I build AI-powered systems that turn repetitive business processes into intelligent, automated workflows."*
 
 ---
 
@@ -94,28 +94,25 @@ Three fully custom canvas-based demos built from scratch:
 - GSAP ScrollTrigger synced with Lenis `raf` loop
 - 120fps butter-smooth scroll even with heavy canvas rendering
 
-### 📊 Animated Metrics Counter
-- 30+ Projects · 6+ Years · 100% Client Satisfaction
-- Numbers animate up when scrolled into view using Framer Motion `useMotionValue`
-
 ---
 
 ## 💼 Projects Showcase
 
-### Mobile Applications
+### Client & Application Systems
 
 | Project | Type | Stack | Status |
 |---------|------|-------|--------|
-| **CloudPulse** | Real-Time Monitor | Flutter, Dart, Firebase | Shipped |
+| **CloudPulse Monitor** | Telemetry & Automated Alerting | Flutter, Dart, Firebase, REST APIs | Shipped |
+| **AIVoice Platform** | Voice AI & Automation | Flutter, Dart, Whisper, Python | Shipped |
 
-### Web Applications
+### Platforms & Workflow Systems
 
 | Project | Type | Stack |
 |---------|------|-------|
-| **Commerce Hub** | E-Commerce | Next.js, TypeScript, Stripe |
-| **ContentStudio** | Creative SaaS | Next.js, Node.js, Redis |
-| **AI Platform** | Intelligent Analysis | Next.js, Python, FastAPI |
-| **Artisan Bakery** | Storefront & Ordering | React, Node.js, MongoDB |
+| **AI Knowledge Platform** | AI SaaS & Workflow System | Python, FastAPI, LangChain, pgvector, Next.js |
+| **ContentStudio Workflow** | Intelligent SaaS Platform | Next.js, Node.js, Redis, Bull Queue, PostgreSQL |
+| **Commerce Hub Automation** | E-Commerce System | Next.js App Router, TypeScript, Stripe, Vercel |
+| **Order Automation System** | Web Application | React, Node.js, Express, MongoDB |
 
 ---
 

@@ -14,15 +14,14 @@ interface Props {
   onOpenPalette: () => void;
 }
 
-const FILTERS: FilterValue[] = ["All", "AI & GenAI", "Web", "Mobile", "Infra", "DesignOps"];
+const FILTERS: FilterValue[] = ["All", "AI & LLMs", "Backend", "Frontend", "Data & Infra"];
 
 const COLOR_FOR: Record<FilterValue, string> = {
-  "All":         "#94a3b8",
-  "AI & GenAI":  "#A855F7",
-  "Web":         "#61DAFB",
-  "Mobile":      "#027DFD",
-  "Infra":       "#52b788",
-  "DesignOps":   "#F97316",
+  "All":          "#94a3b8",
+  "AI & LLMs":    "#A855F7",
+  "Backend":      "#3776AB",
+  "Frontend":     "#61DAFB",
+  "Data & Infra": "#4169E1",
 };
 
 export default function ForgeCommandBar({ active, onChange, counts, onOpenPalette }: Props) {

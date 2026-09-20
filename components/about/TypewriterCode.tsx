@@ -25,15 +25,15 @@ const codeLines = [
   { id: 14, content: '    "Workflow & Process Automation",', type: "string", tooltip: "nextjs" },
   { id: 15, content: '    "RAG & Semantic Retrieval"', type: "string", tooltip: "flutter" },
   { id: 16, content: "  ],", type: "close", tooltip: null },
-  { id: 17, content: "  stats: {", type: "nested", tooltip: null },
-  { id: 18, content: "    aiIntegrations: 12,", type: "property", tooltip: "integrations" },
-  { id: 19, content: '    workflowOptimization: "High",', type: "property", tooltip: "projects" },
-  { id: 20, content: '    philosophy: "Turn manual processes into intelligent automation"', type: "property", tooltip: "philosophy" },
+  { id: 17, content: "  philosophy: {", type: "nested", tooltip: null },
+  { id: 18, content: '    approach: "Understand process -> Apply AI -> Automate tools",', type: "property", tooltip: "focus" },
+  { id: 19, content: '    objective: "Measurable, reliable execution",', type: "property", tooltip: "projects" },
+  { id: 20, content: '    core: "Turn repetitive manual work into automated workflows"', type: "property", tooltip: "philosophy" },
   { id: 21, content: "  }", type: "close", tooltip: null },
   { id: 22, content: "};", type: "close", tooltip: null },
   { id: 23, content: "", type: "empty", tooltip: null },
-  { id: 24, content: "// Currently building: Autonomous AI workflows", type: "comment", tooltip: null },
-  { id: 25, content: "// Available for: AI automation & LLM consulting", type: "comment", tooltip: null },
+  { id: 24, content: "// Currently building: Practical AI & agentic systems", type: "comment", tooltip: null },
+  { id: 25, content: "// Available for: AI automation & intelligent workflow engineering", type: "comment", tooltip: null },
 ];
 
 // Syntax highlighting colors

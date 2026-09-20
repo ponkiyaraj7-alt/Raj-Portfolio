@@ -19,30 +19,30 @@ const BUILD_LANES = [
   {
     id: "ai",
     visualKind: "ai",
-    label: "AI workflows",
-    short: "Agents + RAG",
-    line: "Systems that remove busywork and turn scattered data into useful action.",
-    metric: "12+ AI integrations",
+    label: "AI Automation",
+    short: "Agents + Workflows",
+    line: "Intelligent systems that turn repetitive manual processes into automated execution pipelines.",
+    metric: "Agentic Workflows",
     accent: "#1f7a5c",
     secondaryAccent: "#2563eb",
   },
   {
     id: "web",
     visualKind: "web",
-    label: "Web products",
-    short: "SaaS + commerce",
-    line: "Interfaces that load fast, feel polished, and help people move with confidence.",
-    metric: "30+ shipped builds",
+    label: "LLMs & RAG",
+    short: "Reasoning + Context",
+    line: "Grounding language models with structured knowledge retrieval, vector search, and tool execution.",
+    metric: "Knowledge & APIs",
     accent: "#2563eb",
     secondaryAccent: "#1f7a5c",
   },
   {
     id: "mobile",
     visualKind: "mobile",
-    label: "Android apps",
-    short: "Flutter + AI",
-    line: "Mobile products with native-feeling flows, subscriptions, and production habits.",
-    metric: "4 yrs Flutter",
+    label: "Full-Stack AI",
+    short: "Python + Next.js",
+    line: "End-to-end intelligent applications connecting responsive frontends to robust backend architectures.",
+    metric: "Production Delivery",
     accent: "#d97706",
     secondaryAccent: "#1f7a5c",
   },
@@ -590,22 +590,22 @@ export default function HeroSection() {
         >
           <div className="hero-kicker">
             <span className="hero-live-dot" aria-hidden="true" />
-            <span>Raj Ponkiya — Associate AI Developer</span>
+            <span>SYSTEM / 01 &nbsp;•&nbsp; RAJ PONKIYA &nbsp;•&nbsp; ASSOCIATE AI DEVELOPER</span>
           </div>
 
-          <h1>I build intelligent AI systems & automation workflows.</h1>
+          <h1>I build AI systems that turn manual work into intelligent workflows.</h1>
 
           <p className="hero-lede">
-            Specializing in AI development, LLM solutions, autonomous agents, and turning manual business processes into seamless automated systems.
+            Engineering autonomous agents, LLM applications, and RAG architectures that connect cognitive reasoning with real-world business systems.
           </p>
 
           <div className="hero-actions" aria-label="Primary actions">
-            <a className="hero-primary" href="#work" onClick={scrollToWork}>
-              See the work
-              <span aria-hidden="true">+</span>
+            <a className="hero-primary" href="#system">
+              Explore System
+              <span aria-hidden="true">→</span>
             </a>
             <Link className="hero-secondary" href="/quote">
-              Start a project
+              Request Project Quote
             </Link>
           </div>
 
@@ -653,9 +653,11 @@ export default function HeroSection() {
       </div>
 
       <div className="hero-proof-line" aria-label="Portfolio proof points">
-        <span>30+ shipped builds</span>
-        <span>AI plus web plus mobile</span>
-        <span>Production-first delivery</span>
+        <span>AI</span>
+        <span>AUTOMATION</span>
+        <span>LLMs</span>
+        <span>AGENTS</span>
+        <span>RAG</span>
       </div>
 
       <style jsx global>{`
@@ -665,12 +667,14 @@ export default function HeroSection() {
           min-height: calc(100svh - 32px);
           overflow: hidden;
           display: flex;
+          flex-direction: column;
+          justify-content: center;
           align-items: center;
-          background:
-            linear-gradient(180deg, rgba(251, 255, 251, 0.98) 0%, #ffffff 54%, #f4faf6 100%),
-            linear-gradient(120deg, rgba(31, 122, 92, 0.09), rgba(37, 99, 235, 0.045), rgba(217, 119, 6, 0.035));
-          color: #10231c;
-          padding: 104px 24px 60px;
+          background-color: #f7f8fa;
+          background-image: radial-gradient(#d1d5db 1px, transparent 1px);
+          background-size: 28px 28px;
+          color: #111318;
+          padding: 104px 24px 44px;
           font-family: var(--font-inter), Inter, sans-serif;
         }
 
@@ -679,25 +683,25 @@ export default function HeroSection() {
           inset: 0;
           pointer-events: none;
           background-image:
-            linear-gradient(rgba(31, 122, 92, 0.052) 1px, transparent 1px),
-            linear-gradient(90deg, rgba(31, 122, 92, 0.046) 1px, transparent 1px);
-          background-size: 58px 58px;
-          mask-image: linear-gradient(to bottom, transparent, black 18%, black 72%, transparent);
-          -webkit-mask-image: linear-gradient(to bottom, transparent, black 18%, black 72%, transparent);
-          opacity: 0.76;
+            linear-gradient(rgba(226, 229, 233, 0.45) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(226, 229, 233, 0.45) 1px, transparent 1px);
+          background-size: 56px 56px;
+          mask-image: linear-gradient(to bottom, transparent, black 15%, black 75%, transparent);
+          -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 75%, transparent);
+          opacity: 0.7;
         }
 
         .hero-light-ribbon {
           position: absolute;
-          inset: -22% -12% auto;
-          height: 62%;
+          inset: -20% -10% auto;
+          height: 60%;
           pointer-events: none;
           background:
-            linear-gradient(108deg, transparent 7%, rgba(255, 255, 255, 0.78) 34%, transparent 58%),
-            linear-gradient(98deg, transparent 20%, rgba(82, 183, 136, 0.14) 48%, transparent 74%);
-          transform: rotate(-5deg);
-          filter: blur(2px);
-          opacity: 0.84;
+            linear-gradient(108deg, transparent 10%, rgba(255, 255, 255, 0.85) 35%, transparent 60%),
+            linear-gradient(98deg, transparent 25%, rgba(37, 99, 235, 0.04) 50%, transparent 75%);
+          transform: rotate(-3deg);
+          filter: blur(4px);
+          opacity: 0.8;
         }
 
         .hero-shell {
@@ -706,7 +710,7 @@ export default function HeroSection() {
           width: min(1180px, 100%);
           margin: 0 auto;
           display: grid;
-          grid-template-columns: minmax(0, 0.9fr) minmax(430px, 1.1fr);
+          grid-template-columns: minmax(0, 0.95fr) minmax(430px, 1.05fr);
           gap: 42px;
           align-items: center;
         }
@@ -720,25 +724,26 @@ export default function HeroSection() {
         .hero-kicker {
           display: inline-flex;
           align-items: center;
-          gap: 10px;
-          min-height: 34px;
-          padding: 8px 12px;
-          border: 1px solid rgba(31, 122, 92, 0.14);
+          gap: 8px;
+          min-height: 32px;
+          padding: 6px 14px;
+          border: 1px solid #e2e5e9;
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.66);
-          color: #1f5f49;
-          backdrop-filter: blur(18px) saturate(160%);
-          -webkit-backdrop-filter: blur(18px) saturate(160%);
-          font-size: 12px;
-          font-weight: 800;
+          background: #ffffff;
+          color: #111318;
+          box-shadow: 0 1px 3px rgba(17, 19, 24, 0.04);
+          font-size: 11px;
+          font-weight: 700;
+          font-family: var(--font-mono), monospace;
+          letter-spacing: 0.06em;
         }
 
         .hero-live-dot {
-          width: 8px;
-          height: 8px;
+          width: 7px;
+          height: 7px;
           border-radius: 999px;
-          background: #1f7a5c;
-          box-shadow: 0 0 0 6px rgba(31, 122, 92, 0.12);
+          background: #2563eb;
+          box-shadow: 0 0 6px #2563eb;
           flex: 0 0 auto;
         }
 
@@ -785,30 +790,38 @@ export default function HeroSection() {
         }
 
         .hero-primary {
-          background: #163f32;
+          background: #2563eb;
           color: #ffffff;
-          box-shadow: 0 18px 42px rgba(22, 63, 50, 0.22);
+          border: 1px solid #2563eb;
+          box-shadow: 0 4px 16px rgba(37, 99, 235, 0.25);
         }
 
         .hero-primary span {
           display: inline-grid;
           place-items: center;
-          width: 21px;
-          height: 21px;
+          width: 20px;
+          height: 20px;
           border-radius: 999px;
-          background: rgba(255, 255, 255, 0.16);
+          background: rgba(255, 255, 255, 0.2);
         }
 
         .hero-secondary {
-          color: #163f32;
-          background: rgba(255, 255, 255, 0.7);
-          border: 1px solid rgba(31, 122, 92, 0.17);
-          backdrop-filter: blur(18px) saturate(160%);
-          -webkit-backdrop-filter: blur(18px) saturate(160%);
+          color: #111318;
+          background: #ffffff;
+          border: 1px solid #e2e5e9;
+          box-shadow: 0 1px 3px rgba(17, 19, 24, 0.03);
         }
 
-        .hero-primary:hover,
+        .hero-primary:hover {
+          background: #1d4ed8;
+          border-color: #1d4ed8;
+          transform: translateY(-2px);
+          box-shadow: 0 8px 24px rgba(37, 99, 235, 0.35);
+        }
+
         .hero-secondary:hover {
+          border-color: #cbd2d9;
+          background: #f8fafc;
           transform: translateY(-2px);
         }
 
@@ -822,39 +835,38 @@ export default function HeroSection() {
 
         .hero-lane-tabs button {
           position: relative;
-          min-height: 74px;
-          border: 1px solid rgba(16, 35, 28, 0.1);
-          border-radius: 8px;
-          background: rgba(255, 255, 255, 0.62);
-          color: #52645c;
-          padding: 14px;
+          min-height: 68px;
+          border: 1px solid #e2e5e9;
+          border-radius: 12px;
+          background: #ffffff;
+          color: #5f6672;
+          padding: 12px 14px;
           text-align: left;
           cursor: pointer;
           overflow: hidden;
-          backdrop-filter: blur(18px) saturate(150%);
-          -webkit-backdrop-filter: blur(18px) saturate(150%);
-          transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+          box-shadow: 0 1px 3px rgba(17, 19, 24, 0.02);
+          transition: all 0.2s ease;
         }
 
         .hero-lane-tabs button:before {
           content: "";
           position: absolute;
-          left: 14px;
-          right: 14px;
+          left: 12px;
+          right: 12px;
           top: 0;
-          height: 3px;
+          height: 2px;
           border-radius: 0 0 999px 999px;
-          background: var(--lane);
-          opacity: 0.18;
+          background: #2563eb;
+          opacity: 0;
           transition: opacity 0.2s ease;
         }
 
         .hero-lane-tabs button:hover,
         .hero-lane-tabs button.is-active {
           transform: translateY(-2px);
-          border-color: color-mix(in srgb, var(--lane) 35%, rgba(16, 35, 28, 0.1));
-          background: rgba(255, 255, 255, 0.82);
-          box-shadow: 0 18px 38px rgba(16, 35, 28, 0.08);
+          border-color: #2563eb;
+          background: #ffffff;
+          box-shadow: 0 6px 20px rgba(37, 99, 235, 0.08);
         }
 
         .hero-lane-tabs button.is-active:before {
@@ -1092,42 +1104,40 @@ export default function HeroSection() {
         }
 
         .hero-proof-line {
-          position: absolute;
+          position: relative;
           z-index: 3;
-          left: 50%;
-          bottom: 22px;
-          transform: translateX(-50%);
+          margin-top: 36px;
           width: min(860px, calc(100% - 48px));
           display: flex;
           justify-content: center;
           gap: 9px;
           flex-wrap: wrap;
-          color: #66786f;
-          font-size: 12px;
-          font-weight: 850;
+          color: #5F6672;
+          font-size: 11px;
+          font-weight: 700;
+          letter-spacing: 0.08em;
           pointer-events: none;
         }
 
         .hero-proof-line span {
           display: inline-flex;
-          min-height: 34px;
+          min-height: 32px;
           align-items: center;
           gap: 8px;
           border-radius: 999px;
-          padding: 8px 14px;
-          border: 1px solid rgba(31, 122, 92, 0.13);
-          background: rgba(255, 255, 255, 0.68);
-          box-shadow: 0 14px 32px rgba(16, 35, 28, 0.08);
-          backdrop-filter: blur(18px) saturate(160%);
-          -webkit-backdrop-filter: blur(18px) saturate(160%);
+          padding: 6px 14px;
+          border: 1px solid #E2E5E9;
+          background: #FFFFFF;
+          box-shadow: 0 1px 3px rgba(17, 19, 24, 0.02), 0 4px 12px rgba(17, 19, 24, 0.04);
+          font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
         }
 
         .hero-proof-line span:before {
           content: "";
-          width: 6px;
-          height: 6px;
+          width: 5px;
+          height: 5px;
           border-radius: 999px;
-          background: rgba(31, 122, 92, 0.72);
+          background: #2563EB;
         }
 
         @media (max-width: 1040px) {
@@ -1351,31 +1361,20 @@ export default function HeroSection() {
           }
 
           .hero-proof-line {
-            bottom: 12px;
-            width: calc(100% - 32px);
-            flex-wrap: nowrap;
-            gap: 0;
+            margin-top: 24px;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            flex-wrap: wrap;
             font-size: 10px;
           }
 
           .hero-proof-line span {
-            display: none;
-          }
-
-          .hero-proof-line span:first-child {
             display: inline-flex;
-            width: 100%;
-            min-height: 32px;
-            justify-content: center;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            padding: 8px 11px;
-          }
-
-          .hero-proof-line span:first-child:after {
-            content: " / AI + web + mobile";
-            color: #72827a;
+            min-height: 28px;
+            padding: 5px 10px;
+            font-size: 10px;
           }
         }
 

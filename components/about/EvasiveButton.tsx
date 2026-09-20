@@ -5,29 +5,30 @@
 
 import { useRef, useState, useCallback, useEffect } from "react";
 import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { Zap } from "lucide-react";
 
 interface EvasiveButtonProps {
   onCatch: () => void;
 }
 
 const TAUNTS = [
-  "Too slow! ⚡",
-  "Catch me if you can! 🏃",
-  "My developer taught me self-defense 🥋",
-  "You don't really mean that... do you? 🥺",
-  "I'm too valuable to lose! 💎",
-  "Your cursor needs more training! 🎯",
-  "Almost! But not quite 😉",
-  "I'm quicker than a Flutter hot reload! 🔥",
-  "Try harder! My CI/CD pipeline did 🚀",
-  "Missed me by a pixel! 🎨",
+  "Too slow!",
+  "Catch me if you can!",
+  "My developer taught me self-defense",
+  "You don't really mean that... do you?",
+  "I'm too valuable to lose!",
+  "Your cursor needs more training!",
+  "Almost! But not quite.",
+  "I'm quicker than a Flutter hot reload!",
+  "Try harder! My CI/CD pipeline did",
+  "Missed me by a pixel!",
 ];
 
 const MOBILE_TAUNTS = [
-  "I'm too fast for thumbs! 🦘",
-  "Tiny screen, tiny chance! 📱",
-  "Try landscape mode! 🔄",
-  "My responsive design evades you! 💨",
+  "I'm too fast for thumbs!",
+  "Tiny screen, tiny chance!",
+  "Try landscape mode!",
+  "My responsive design evades you!",
 ];
 
 export default function EvasiveButton({ onCatch }: EvasiveButtonProps) {
@@ -103,7 +104,7 @@ export default function EvasiveButton({ onCatch }: EvasiveButtonProps) {
     setTaunt("SYSTEM COMPROMISED");
 
     setTimeout(() => {
-      setTaunt("Error 418: I'm a teapot ☕");
+      setTaunt("Error 418: I'm a teapot");
     }, 800);
 
     setTimeout(() => {
@@ -176,8 +177,9 @@ export default function EvasiveButton({ onCatch }: EvasiveButtonProps) {
               <motion.span
                 animate={{ x: [0, 3, 0] }}
                 transition={{ repeat: Infinity, duration: 0.5 }}
+                className="inline-flex items-center"
               >
-                🏃
+                <Zap className="w-3.5 h-3.5 text-amber-400" />
               </motion.span>
             )}
           </span>

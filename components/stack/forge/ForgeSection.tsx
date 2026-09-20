@@ -21,8 +21,18 @@ function ForgeInner() {
   const [highlighted, setHighlighted] = useState<string | null>(null);
   // Counts per filter value (for chips)
   const counts = useMemo<Record<FilterValue, number>>(() => {
-    const c: Record<FilterValue, number> = { "All": SKILLS.length, "AI & GenAI": 0, "Web": 0, "Mobile": 0, "Infra": 0, "DesignOps": 0 };
-    SKILLS.forEach((s) => { c[s.category] += 1; });
+    const c: Record<FilterValue, number> = {
+      "All": SKILLS.length,
+      "AI & LLMs": 0,
+      "Backend": 0,
+      "Frontend": 0,
+      "Data & Infra": 0,
+    };
+    SKILLS.forEach((s) => {
+      if (c[s.category] !== undefined) {
+        c[s.category] += 1;
+      }
+    });
     return c;
   }, []);
 
@@ -139,14 +149,14 @@ function ForgeInner() {
           >
             <p style={{ margin: 0, fontSize: 15, lineHeight: 1.85, color: "rgba(148,163,184,0.72)", maxWidth: 460 }}>
               Not a logo wall — a <em style={{ color: "#f1f5f9", fontStyle: "normal", fontWeight: 600 }}>working</em> arsenal.
-              Hover the showpieces below to see retrieval-augmented pipelines, streaming LLMs, type-safe everything,
-              and Flutter UI breathing in real time. <span style={{ color: "#52b788" }}>Press ⌘K</span> to search 33 tools.
+              Production-tested tools across LLM pipelines, autonomous agents, high-throughput APIs,
+              and full-stack web architectures. <span style={{ color: "#52b788" }}>Press ⌘K</span> to search tools.
             </p>
             <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>
               {[
-                { n: "6+",                 label: "years",        c: "#52b788" },
+                { n: "AI",                 label: "focused",      c: "#52b788" },
                 { n: `${SKILLS.length}`,    label: "technologies", c: "#A855F7" },
-                { n: "30+",                label: "shipped",      c: "#61DAFB" },
+                { n: "Full-Stack",         label: "architecture", c: "#61DAFB" },
               ].map(({ n, label, c }) => (
                 <div key={label} style={{
                   padding: "10px 18px", borderRadius: 14,

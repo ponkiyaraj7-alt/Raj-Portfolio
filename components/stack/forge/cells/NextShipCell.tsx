@@ -20,7 +20,7 @@ const SCRIPT: { text: string; cls?: "cmd" | "ok" | "muted" | "head" | "info" | "
   { text: "  └ ○ /quote             2.9 kB      98 kB", cls: "muted" },
   { text: "", cls: "muted" },
   { text: "$ vercel --prod", cls: "cmd", delay: 480 },
-  { text: "  🚀 Deployed to production", cls: "deploy", delay: 320 },
+  { text: "  ● Deployed to production", cls: "deploy", delay: 320 },
 ];
 
 export default function NextShipCell({ skill, index = 0, span }: { skill: Skill; index?: number; span?: { col?: number; row?: number } }) {

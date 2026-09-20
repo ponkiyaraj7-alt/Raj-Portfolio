@@ -5,6 +5,7 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { CheckCircle, Trophy, Check, Copy } from "lucide-react";
 
 interface EmailPopupProps {
   email: string;
@@ -201,9 +202,13 @@ export default function EmailPopup({
                 transition={{ delay: 0.1, type: "spring", stiffness: 200 }}
                 className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-emerald-500/20 to-teal-500/20 flex items-center justify-center"
               >
-                <span className="text-3xl">
-                  {variant === "success" ? "✅" : "🏆"}
-                </span>
+                <div className="flex items-center justify-center">
+                  {variant === "success" ? (
+                    <CheckCircle className="w-8 h-8 text-emerald-400" />
+                  ) : (
+                    <Trophy className="w-8 h-8 text-amber-400" />
+                  )}
+                </div>
               </motion.div>
 
               {/* Title */}
@@ -227,7 +232,7 @@ export default function EmailPopup({
               >
                 {variant === "success"
                   ? "I've copied my email to your clipboard. Let's build something amazing!"
-                  : "You caught me! I guess you really want to work together 😉"}
+                  : "You caught the evasive button! Let's build something exceptional together."}
               </motion.p>
 
               {/* Email display */}
@@ -245,10 +250,10 @@ export default function EmailPopup({
                     {email}
                   </span>
                   <motion.span
-                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40"
+                    className="absolute right-4 top-1/2 -translate-y-1/2 text-white/60 flex items-center justify-center"
                     animate={copied ? { scale: [1, 1.2, 1] } : {}}
                   >
-                    {copied ? "✓" : "📋"}
+                    {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4 text-white/50" />}
                   </motion.span>
                 </button>
 

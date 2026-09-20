@@ -3,6 +3,30 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { gsap } from "gsap";
+import { 
+    Cpu, 
+    Globe, 
+    Smartphone, 
+    Sparkles, 
+    Zap, 
+    Clock, 
+    Calendar, 
+    Workflow, 
+    Layers, 
+    Coins, 
+    Briefcase, 
+    Building2, 
+    ArrowLeft, 
+    ArrowRight, 
+    Check, 
+    CheckCircle2, 
+    Mail, 
+    Phone, 
+    User, 
+    MessageSquare,
+    ShieldCheck,
+    Send
+} from "lucide-react";
 
 export default function QuotePage() {
     const [currentStep, setCurrentStep] = useState(1);
@@ -53,18 +77,18 @@ export default function QuotePage() {
             return;
         }
 
-        const xOut = direction === 'forward' ? -30 : 30;
-        const xIn = direction === 'forward' ? 30 : -30;
+        const xOut = direction === 'forward' ? -24 : 24;
+        const xIn = direction === 'forward' ? 24 : -24;
 
         gsap.to(content, {
             x: xOut,
             opacity: 0,
-            duration: 0.3,
+            duration: 0.25,
             onComplete: () => {
                 setCurrentStep(newStep);
                 gsap.fromTo(content,
                     { x: xIn, opacity: 0 },
-                    { x: 0, opacity: 1, duration: 0.3 }
+                    { x: 0, opacity: 1, duration: 0.25 }
                 );
             }
         });
@@ -80,7 +104,6 @@ export default function QuotePage() {
 
     const updateData = (field: string, value: string) => {
         setFormData(prev => ({ ...prev, [field]: value }));
-        // Clear error if user starts typing in a previously required field
         if (errors[field as keyof typeof errors]) {
             setErrors(prev => ({ ...prev, [field]: false }));
         }
@@ -89,7 +112,7 @@ export default function QuotePage() {
     const validateForm = () => {
         const newErrors = {
             name: !formData.name.trim(),
-            email: !formData.email.trim(),
+            email: !formData.email.trim() || !formData.email.includes("@"),
             message: !formData.message.trim(),
         };
         setErrors(newErrors);
@@ -100,71 +123,120 @@ export default function QuotePage() {
         if (!validateForm()) return;
 
         setIsSubmitting(true);
+        const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "2357ad27-d2c0-47b1-84ff-bd1a8b3a3649";
+
+        const messagePayload = `
+========================================
+NEW PORTFOLIO PROJECT & QUOTE INQUIRY
+========================================
+
+CLIENT INFORMATION:
+• Name:  ${formData.name}
+• Email: ${formData.email}
+• Phone: ${formData.phone || "Not provided"}
+
+PROJECT REQUIREMENTS:
+• Service Category: ${formData.service}
+• Target Timeline:  ${formData.timeline}
+• Budget Range:     ${formData.budget}
+
+PROJECT SCOPE & DETAILS:
+${formData.message}
+
+========================================
+Delivered directly to Raj Ponkiya (ponkiyaraj7@gmail.com)
+`.trim();
+
+        const emailSubject = encodeURIComponent(`Project Inquiry: ${formData.service} from ${formData.name}`);
+        const emailBody = encodeURIComponent(messagePayload);
+        const mailtoUrl = `mailto:ponkiyaraj7@gmail.com?subject=${emailSubject}&body=${emailBody}`;
+
         try {
             const response = await fetch("https://api.web3forms.com/submit", {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                    "Accept": "application/json",
+                },
                 body: JSON.stringify({
-                    access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "",
-                    subject: "New Quote Request — Portfolio",
-                    from_name: "Portfolio Quote Form",
+                    access_key: accessKey,
+                    subject: `Project Inquiry: ${formData.service} from ${formData.name}`,
+                    from_name: `${formData.name} via Portfolio`,
+                    replyto: formData.email,
                     name: formData.name,
                     email: formData.email,
                     phone: formData.phone || "Not provided",
                     service: formData.service,
                     timeline: formData.timeline,
                     budget: formData.budget,
-                    message: formData.message,
-                    botcheck: false,
+                    message: messagePayload,
                 }),
             });
             const result = await response.json();
             if (result.success) {
-                // Progress to Step 5 (Done)
+                animateStepChange(5, 'forward');
+                setIsSubmitted(true);
+            } else {
+                console.warn("Web3Forms error response, falling back to direct email:", result);
+                window.location.href = mailtoUrl;
                 animateStepChange(5, 'forward');
                 setIsSubmitted(true);
             }
         } catch (error) {
-            console.error("Form submission error:", error);
+            console.error("Form submission error, falling back to direct email:", error);
+            window.location.href = mailtoUrl;
+            animateStepChange(5, 'forward');
+            setIsSubmitted(true);
         }
         setIsSubmitting(false);
     };
 
-    const steps = ["Service", "Timeline", "Budget", "Details", "Done"];
+    const steps = [
+        { id: 1, label: "Service" },
+        { id: 2, label: "Timeline" },
+        { id: 3, label: "Budget" },
+        { id: 4, label: "Details" },
+        { id: 5, label: "Done" },
+    ];
 
     return (
         <div style={{
             minHeight: "100vh",
             backgroundColor: "#fafafa",
-            fontFamily: "'SF Pro Text', -apple-system, sans-serif",
-            padding: "24px 20px",
+            fontFamily: "var(--font-inter), Inter, -apple-system, sans-serif",
+            padding: "32px 16px 64px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center"
         }}>
             {/* Top Bar */}
-            <div style={{ width: "100%", maxWidth: "560px", marginBottom: "20px" }}>
+            <div style={{ width: "100%", maxWidth: "600px", marginBottom: "20px" }}>
                 <Link href="/" className="back-link" style={{
                     fontSize: "14px",
-                    color: "#86868b",
+                    color: "#6e6e73",
                     textDecoration: "none",
+                    display: "inline-flex",
+                    alignItems: "center",
+                    gap: "8px",
+                    fontWeight: 500,
                     transition: "color 0.2s ease"
-                }} onMouseOver={(e) => e.currentTarget.style.color = "#1d1d1f"} onMouseOut={(e) => e.currentTarget.style.color = "#86868b"}>
-                    ← Back to portfolio
+                }} onMouseOver={(e) => e.currentTarget.style.color = "#1d1d1f"} onMouseOut={(e) => e.currentTarget.style.color = "#6e6e73"}>
+                    <ArrowLeft size={16} />
+                    Back to portfolio
                 </Link>
             </div>
 
             {/* Main Card */}
             <div className="quote-card" ref={cardRef} style={{
                 width: "100%",
-                maxWidth: "560px",
+                maxWidth: "600px",
                 background: "#ffffff",
-                border: "1px solid rgba(0,0,0,0.06)",
-                borderRadius: "24px",
-                boxShadow: "0 4px 16px rgba(0,0,0,0.04), 0 20px 60px rgba(0,0,0,0.08)",
-                padding: "48px 40px",
+                border: "1px solid #E2E5E9",
+                borderRadius: "16px",
+                boxShadow: "0 1px 3px rgba(17,19,24,0.02), 0 4px 16px rgba(17,19,24,0.04)",
+                padding: "40px 36px",
                 boxSizing: "border-box",
-                overflow: "hidden" // Prevent slide-in content from spilling out horizontally
+                overflow: "hidden"
             }}>
                 
                 {/* Progress Indicators */}
@@ -178,46 +250,62 @@ export default function QuotePage() {
                     {/* Background line */}
                     <div style={{
                         position: "absolute",
-                        top: "6px",
-                        left: "10px",
-                        right: "10px",
+                        top: "8px",
+                        left: "16px",
+                        right: "16px",
                         height: "2px",
-                        background: "rgba(0,0,0,0.08)",
+                        background: "#E2E5E9",
                         zIndex: 0
                     }} />
                     
                     {/* Active line fill */}
                     <div style={{
                         position: "absolute",
-                        top: "6px",
-                        left: "10px",
+                        top: "8px",
+                        left: "16px",
                         height: "2px",
-                        width: `calc(${((currentStep - 1) / 4) * 100}% - 20px)`,
-                        background: "#2d6a4f",
+                        width: `calc(${((currentStep - 1) / (steps.length - 1)) * 100}% - 32px)`,
+                        background: "#2563EB",
                         transition: "width 0.4s ease",
                         zIndex: 0
                     }} />
 
-                    {steps.map((label, index) => {
+                    {steps.map((s, index) => {
                         const stepNum = index + 1;
                         const isCompleted = stepNum < currentStep;
                         const isCurrent = stepNum === currentStep;
 
                         return (
-                            <div key={label} style={{
-                                display: "flex", flexDirection: "column", alignItems: "center", zIndex: 1, width: "32px"
+                            <div key={s.id} style={{
+                                display: "flex",
+                                flexDirection: "column",
+                                alignItems: "center",
+                                zIndex: 1,
+                                flex: 1
                             }}>
                                 <div style={{
-                                    width: "12px", height: "12px", borderRadius: "50%",
-                                    background: isCompleted || isCurrent ? "#2d6a4f" : "#ffffff",
-                                    border: `2px solid ${isCompleted || isCurrent ? "#2d6a4f" : "rgba(0,0,0,0.1)"}`,
-                                    boxShadow: isCurrent ? "0 0 0 4px rgba(45,106,79,0.15)" : "none",
+                                    width: "18px",
+                                    height: "18px",
+                                    borderRadius: "50%",
+                                    background: isCompleted || isCurrent ? "#2563EB" : "#ffffff",
+                                    border: `2px solid ${isCompleted || isCurrent ? "#2563EB" : "#CBD2D9"}`,
+                                    boxShadow: isCurrent ? "0 0 0 4px rgba(37,99,235,0.15)" : "none",
+                                    display: "flex",
+                                    alignItems: "center",
+                                    justifyContent: "center",
+                                    color: "#ffffff",
                                     transition: "all 0.3s ease"
-                                }} />
-                                <span style={{
-                                    fontSize: "10px", color: "#86868b", marginTop: "8px", fontWeight: isCurrent ? 600 : 400
                                 }}>
-                                    {label}
+                                    {isCompleted && <Check size={10} strokeWidth={3} />}
+                                </div>
+                                <span style={{
+                                    fontSize: "11px",
+                                    color: isCurrent ? "#1d1d1f" : "#86868b",
+                                    marginTop: "8px",
+                                    fontWeight: isCurrent ? 700 : 500,
+                                    whiteSpace: "nowrap"
+                                }}>
+                                    {s.label}
                                 </span>
                             </div>
                         );
@@ -229,59 +317,80 @@ export default function QuotePage() {
                     {/* STEP 1 */}
                     {currentStep === 1 && (
                         <div>
-                            <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#1d1d1f", textAlign: "center", marginBottom: "32px" }}>
-                                What would you like me to build?
+                            <h2 style={{ fontSize: "22px", fontWeight: 700, color: "#1d1d1f", textAlign: "center", marginBottom: "8px", fontFamily: "var(--font-display), sans-serif", letterSpacing: "-0.02em" }}>
+                                What system do you need built?
                             </h2>
+                            <p style={{ fontSize: "14px", color: "#6e6e73", textAlign: "center", margin: "0 0 28px 0" }}>
+                                Select the core category that best fits your project scope.
+                            </p>
                             <div style={{
-                                display: "grid", gridTemplateColumns: "1fr 1fr", gap: "12px"
-                            }} className="step-1-grid">
+                                display: "grid",
+                                gridTemplateColumns: "repeat(auto-fit, minmax(230px, 1fr))",
+                                gap: "12px"
+                            }}>
                                 {[
-                                    { id: "Mobile App", icon: "📱", title: "Mobile App", subtitle: "iOS, Android, or both" },
-                                    { id: "Website", icon: "🌐", title: "Website", subtitle: "Landing page, e-commerce, platform" },
-                                    { id: "AI Workflow", icon: "🧠", title: "AI Workflow", subtitle: "Automation, chatbots, AI tools" },
-                                    { id: "Not sure", icon: "❔", title: "Not sure yet", subtitle: "Let's figure it out together" }
+                                    { id: "AI Workflow & Agents", icon: Cpu, title: "AI Workflows & Agents", subtitle: "Autonomous agents, RAG systems, LLM tools & automated pipelines" },
+                                    { id: "Web Platform & SaaS", icon: Globe, title: "Web Platform & SaaS", subtitle: "Full-stack web applications, dashboards, API services & storefronts" },
+                                    { id: "Mobile Application", icon: Smartphone, title: "Mobile Application", subtitle: "Cross-platform iOS/Android apps with cloud synchronization" },
+                                    { id: "Custom Architecture", icon: Sparkles, title: "Architecture & Scoping", subtitle: "Technical roadmap, system integration, or custom requirements" }
                                 ].map((option) => {
                                     const isSelected = formData.service === option.id;
+                                    const IconComp = option.icon;
                                     return (
                                         <div
                                             key={option.id}
                                             onClick={() => updateData("service", option.id)}
                                             style={{
-                                                padding: "24px",
-                                                borderRadius: "16px",
-                                                border: `${isSelected ? '2px' : '1px'} solid ${isSelected ? '#2d6a4f' : 'rgba(0,0,0,0.08)'}`,
-                                                background: isSelected ? "rgba(45,106,79,0.04)" : "#ffffff",
+                                                padding: "20px",
+                                                borderRadius: "14px",
+                                                border: `1px solid ${isSelected ? '#2563EB' : '#E2E5E9'}`,
+                                                background: isSelected ? "rgba(37,99,235,0.04)" : "#ffffff",
                                                 cursor: "pointer",
                                                 transition: "all 0.2s ease",
                                                 position: "relative",
                                                 transform: isSelected ? "translateY(-2px)" : "none",
-                                                boxShadow: isSelected ? "0 8px 24px rgba(45,106,79,0.08)" : "none"
+                                                boxShadow: isSelected ? "0 4px 16px rgba(37,99,235,0.08)" : "none",
+                                                display: "flex",
+                                                flexDirection: "column",
+                                                minWidth: 0
                                             }}
                                             onMouseEnter={(e) => {
                                                 if (!isSelected) {
-                                                    e.currentTarget.style.borderColor = "rgba(0,0,0,0.15)";
+                                                    e.currentTarget.style.borderColor = "#CBD2D9";
                                                     e.currentTarget.style.transform = "translateY(-2px)";
                                                 }
                                             }}
                                             onMouseLeave={(e) => {
                                                 if (!isSelected) {
-                                                    e.currentTarget.style.borderColor = "rgba(0,0,0,0.08)";
+                                                    e.currentTarget.style.borderColor = "#E2E5E9";
                                                     e.currentTarget.style.transform = "none";
                                                 }
                                             }}
                                         >
                                             {isSelected && (
-                                                <div style={{ position: "absolute", top: "16px", right: "16px", color: "#2d6a4f" }}>
-                                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                                                        <polyline points="20 6 9 17 4 12"></polyline>
-                                                    </svg>
+                                                <div style={{ position: "absolute", top: "14px", right: "14px", color: "#2563EB" }}>
+                                                    <CheckCircle2 size={18} />
                                                 </div>
                                             )}
-                                            <div style={{ fontSize: "32px", marginBottom: "16px" }}>{option.icon}</div>
-                                            <h3 style={{ fontSize: "16px", fontWeight: 700, color: "#1d1d1f", margin: "0 0 4px 0" }}>{option.title}</h3>
-                                            <p style={{ fontSize: "13px", color: "#86868b", margin: 0 }}>{option.subtitle}</p>
+                                            <div style={{
+                                                width: "42px",
+                                                height: "42px",
+                                                borderRadius: "10px",
+                                                background: isSelected ? "rgba(37,99,235,0.1)" : "#F1F3F5",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                color: isSelected ? "#2563EB" : "#111318",
+                                                marginBottom: "14px",
+                                                border: "1px solid #E2E5E9",
+                                                transition: "all 0.2s ease"
+                                            }}>
+                                                <IconComp size={20} />
+                                            </div>
+                                            <h3 style={{ fontSize: "15px", fontWeight: 700, color: "#111318", margin: "0 0 6px 0", letterSpacing: "-0.01em" }}>{option.title}</h3>
+                                            <p style={{ fontSize: "12.5px", color: "#5F6672", margin: 0, lineHeight: 1.45 }}>{option.subtitle}</p>
                                         </div>
-                                    )
+                                    );
                                 })}
                             </div>
                             <div style={{ display: "flex", justifyContent: "flex-end", marginTop: "32px" }}>
@@ -289,18 +398,23 @@ export default function QuotePage() {
                                     onClick={nextStep}
                                     disabled={!formData.service}
                                     style={{
-                                        padding: "14px 32px",
-                                        borderRadius: "12px",
-                                        background: formData.service ? "#2d6a4f" : "rgba(0,0,0,0.1)",
-                                        color: formData.service ? "#ffffff" : "rgba(0,0,0,0.4)",
+                                        padding: "12px 28px",
+                                        borderRadius: "8px",
+                                        background: formData.service ? "#2563EB" : "#F1F3F5",
+                                        color: formData.service ? "#ffffff" : "#8A919C",
                                         fontWeight: 600,
-                                        fontSize: "15px",
-                                        border: "none",
+                                        fontSize: "14px",
+                                        border: "1px solid #E2E5E9",
                                         cursor: formData.service ? "pointer" : "not-allowed",
-                                        transition: "all 0.2s ease"
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        gap: "8px",
+                                        transition: "all 0.2s ease",
+                                        fontFamily: "ui-monospace, monospace"
                                     }}
                                 >
-                                    Next →
+                                    Continue
+                                    <ArrowRight size={15} />
                                 </button>
                             </div>
                         </div>
@@ -309,72 +423,106 @@ export default function QuotePage() {
                     {/* STEP 2 */}
                     {currentStep === 2 && (
                         <div>
-                            <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#1d1d1f", textAlign: "center", marginBottom: "32px" }}>
-                                What's your timeline?
+                            <h2 style={{ fontSize: "22px", fontWeight: 700, color: "#1d1d1f", textAlign: "center", marginBottom: "8px", fontFamily: "var(--font-display), sans-serif", letterSpacing: "-0.02em" }}>
+                                What is your target timeline?
                             </h2>
+                            <p style={{ fontSize: "14px", color: "#6e6e73", textAlign: "center", margin: "0 0 28px 0" }}>
+                                Let me know how quickly you need the system deployed.
+                            </p>
                             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                                 {[
-                                    "🚀 ASAP — I need it yesterday",
-                                    "📅 1–2 weeks",
-                                    "🗓️ About a month",
-                                    "🌱 No rush — let's do it right"
+                                    { id: "Priority (ASAP)", icon: Zap, label: "Priority / Fast Track", desc: "Urgent turnaround — high-priority deployment" },
+                                    { id: "1–2 Weeks", icon: Clock, label: "1–2 Weeks", desc: "Rapid prototype, MVP, or focused sprint" },
+                                    { id: "About 1 Month", icon: Calendar, label: "About 1 Month", desc: "Standard production architecture and delivery" },
+                                    { id: "Flexible", icon: Workflow, label: "Flexible Timeline", desc: "Quality-first, milestone-driven development" }
                                 ].map((option) => {
-                                    const isSelected = formData.timeline === option;
+                                    const isSelected = formData.timeline === option.id;
+                                    const IconComp = option.icon;
                                     return (
                                         <div
-                                            key={option}
-                                            onClick={() => updateData("timeline", option)}
+                                            key={option.id}
+                                            onClick={() => updateData("timeline", option.id)}
                                             style={{
                                                 padding: "16px 20px",
                                                 borderRadius: "12px",
-                                                border: `1px solid ${isSelected ? '#2d6a4f' : 'rgba(0,0,0,0.08)'}`,
-                                                background: isSelected ? "#2d6a4f" : "#ffffff",
-                                                color: isSelected ? "#ffffff" : "#1d1d1f",
-                                                fontSize: "15px",
+                                                border: `1px solid ${isSelected ? '#2563EB' : '#E2E5E9'}`,
+                                                background: isSelected ? "rgba(37,99,235,0.04)" : "#ffffff",
                                                 cursor: "pointer",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "14px",
                                                 transition: "all 0.2s ease"
                                             }}
                                             onMouseEnter={(e) => {
                                                 if (!isSelected) {
-                                                    e.currentTarget.style.borderColor = "rgba(0,0,0,0.15)";
-                                                    e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.02)";
+                                                    e.currentTarget.style.borderColor = "#CBD2D9";
                                                 }
                                             }}
                                             onMouseLeave={(e) => {
                                                 if (!isSelected) {
-                                                    e.currentTarget.style.borderColor = "rgba(0,0,0,0.08)";
-                                                    e.currentTarget.style.backgroundColor = "#ffffff";
+                                                    e.currentTarget.style.borderColor = "#E2E5E9";
                                                 }
                                             }}
                                         >
-                                            {option}
+                                            <div style={{
+                                                width: "36px",
+                                                height: "36px",
+                                                borderRadius: "8px",
+                                                background: isSelected ? "#2563EB" : "#F1F3F5",
+                                                color: isSelected ? "#ffffff" : "#2563EB",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                flexShrink: 0,
+                                                border: "1px solid #E2E5E9"
+                                            }}>
+                                                <IconComp size={17} />
+                                            </div>
+                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                                <div style={{ fontSize: "14px", fontWeight: 700, color: "#111318" }}>
+                                                    {option.label}
+                                                </div>
+                                                <div style={{ fontSize: "12px", color: "#5F6672", marginTop: "2px" }}>
+                                                    {option.desc}
+                                                </div>
+                                            </div>
+                                            {isSelected && (
+                                                <div style={{ color: "#2563EB" }}>
+                                                    <CheckCircle2 size={18} />
+                                                </div>
+                                            )}
                                         </div>
-                                    )
+                                    );
                                 })}
                             </div>
                             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "32px" }}>
                                 <button
                                     onClick={prevStep}
                                     style={{
-                                        padding: "14px 24px", borderRadius: "12px", background: "transparent",
-                                        color: "#86868b", fontWeight: 600, fontSize: "15px", border: "1px solid rgba(0,0,0,0.1)",
-                                        cursor: "pointer", transition: "all 0.2s ease"
+                                        padding: "11px 20px", borderRadius: "8px", background: "transparent",
+                                        color: "#5F6672", fontWeight: 600, fontSize: "13px", border: "1px solid #E2E5E9",
+                                        cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px",
+                                        transition: "all 0.2s ease", fontFamily: "ui-monospace, monospace"
                                     }}
-                                    onMouseOver={(e) => e.currentTarget.style.color = "#1d1d1f"}
-                                    onMouseOut={(e) => e.currentTarget.style.color = "#86868b"}
+                                    onMouseOver={(e) => e.currentTarget.style.color = "#111318"}
+                                    onMouseOut={(e) => e.currentTarget.style.color = "#5F6672"}
                                 >
-                                    ← Back
+                                    <ArrowLeft size={14} />
+                                    Back
                                 </button>
                                 <button
                                     onClick={nextStep}
                                     disabled={!formData.timeline}
                                     style={{
-                                        padding: "14px 32px", borderRadius: "12px", border: "none",
-                                        background: formData.timeline ? "#2d6a4f" : "rgba(0,0,0,0.1)", color: formData.timeline ? "#ffffff" : "rgba(0,0,0,0.4)",
-                                        fontWeight: 600, fontSize: "15px", cursor: formData.timeline ? "pointer" : "not-allowed", transition: "all 0.2s ease"
+                                        padding: "11px 26px", borderRadius: "8px", border: "1px solid #E2E5E9",
+                                        background: formData.timeline ? "#2563EB" : "#F1F3F5", color: formData.timeline ? "#ffffff" : "#8A919C",
+                                        fontWeight: 600, fontSize: "13.5px", cursor: formData.timeline ? "pointer" : "not-allowed",
+                                        display: "inline-flex", alignItems: "center", gap: "8px", transition: "all 0.2s ease",
+                                        fontFamily: "ui-monospace, monospace"
                                     }}
                                 >
-                                    Next →
+                                    Continue
+                                    <ArrowRight size={14} />
                                 </button>
                             </div>
                         </div>
@@ -383,71 +531,106 @@ export default function QuotePage() {
                     {/* STEP 3 */}
                     {currentStep === 3 && (
                         <div>
-                            <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#1d1d1f", textAlign: "center", marginBottom: "8px" }}>
-                                What's your budget range?
+                            <h2 style={{ fontSize: "22px", fontWeight: 700, color: "#111318", textAlign: "center", marginBottom: "8px", fontFamily: "var(--font-display), sans-serif", letterSpacing: "-0.02em" }}>
+                                What is your budget range?
                             </h2>
-                            <p style={{ fontSize: "14px", color: "#86868b", textAlign: "center", marginBottom: "32px", marginTop: 0 }}>
-                                This helps me tailor the right solution for you.
+                            <p style={{ fontSize: "14px", color: "#5F6672", textAlign: "center", margin: "0 0 28px 0" }}>
+                                This ensures the solution is engineered precisely to your scope.
                             </p>
                             <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
                                 {[
-                                    "💰 Under $1,000",
-                                    "💰💰 $1,000 – $3,000",
-                                    "💰💰💰 $3,000 – $5,000",
-                                    "🏦 $5,000+"
+                                    { id: "Under $1,000", icon: Layers, label: "Under $1,000", desc: "Proof of concept, focused workflow, or MVP prototype" },
+                                    { id: "$1,000 – $3,000", icon: Coins, label: "$1,000 – $3,000", desc: "Core AI application, automated workflow, or complete web platform" },
+                                    { id: "$3,000 – $5,000", icon: Briefcase, label: "$3,000 – $5,000", desc: "Multi-agent systems, complex RAG pipelines, or full-stack SaaS" },
+                                    { id: "$5,000+", icon: Building2, label: "$5,000+", desc: "End-to-end enterprise solution with dedicated architecture support" }
                                 ].map((option) => {
-                                    const isSelected = formData.budget === option;
+                                    const isSelected = formData.budget === option.id;
+                                    const IconComp = option.icon;
                                     return (
                                         <div
-                                            key={option}
-                                            onClick={() => updateData("budget", option)}
+                                            key={option.id}
+                                            onClick={() => updateData("budget", option.id)}
                                             style={{
-                                                padding: "16px 20px", borderRadius: "12px",
-                                                border: `1px solid ${isSelected ? '#2d6a4f' : 'rgba(0,0,0,0.08)'}`,
-                                                background: isSelected ? "#2d6a4f" : "#ffffff", color: isSelected ? "#ffffff" : "#1d1d1f",
-                                                fontSize: "15px", cursor: "pointer", transition: "all 0.2s ease"
+                                                padding: "16px 20px",
+                                                borderRadius: "12px",
+                                                border: `1px solid ${isSelected ? '#2563EB' : '#E2E5E9'}`,
+                                                background: isSelected ? "rgba(37,99,235,0.04)" : "#ffffff",
+                                                cursor: "pointer",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                gap: "14px",
+                                                transition: "all 0.2s ease"
                                             }}
                                             onMouseEnter={(e) => {
                                                 if (!isSelected) {
-                                                    e.currentTarget.style.borderColor = "rgba(0,0,0,0.15)";
-                                                    e.currentTarget.style.backgroundColor = "rgba(0,0,0,0.02)";
+                                                    e.currentTarget.style.borderColor = "#CBD2D9";
                                                 }
                                             }}
                                             onMouseLeave={(e) => {
                                                 if (!isSelected) {
-                                                    e.currentTarget.style.borderColor = "rgba(0,0,0,0.08)";
-                                                    e.currentTarget.style.backgroundColor = "#ffffff";
+                                                    e.currentTarget.style.borderColor = "#E2E5E9";
                                                 }
                                             }}
                                         >
-                                            {option}
+                                            <div style={{
+                                                width: "36px",
+                                                height: "36px",
+                                                borderRadius: "8px",
+                                                background: isSelected ? "#2563EB" : "#F1F3F5",
+                                                color: isSelected ? "#ffffff" : "#2563EB",
+                                                display: "flex",
+                                                alignItems: "center",
+                                                justifyContent: "center",
+                                                flexShrink: 0,
+                                                border: "1px solid #E2E5E9"
+                                            }}>
+                                                <IconComp size={17} />
+                                            </div>
+                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                                <div style={{ fontSize: "14px", fontWeight: 700, color: "#111318" }}>
+                                                    {option.label}
+                                                </div>
+                                                <div style={{ fontSize: "12px", color: "#5F6672", marginTop: "2px" }}>
+                                                    {option.desc}
+                                                </div>
+                                            </div>
+                                            {isSelected && (
+                                                <div style={{ color: "#2563EB" }}>
+                                                    <CheckCircle2 size={18} />
+                                                </div>
+                                            )}
                                         </div>
-                                    )
+                                    );
                                 })}
                             </div>
                             <div style={{ display: "flex", justifyContent: "space-between", marginTop: "32px" }}>
                                 <button
                                     onClick={prevStep}
                                     style={{
-                                        padding: "14px 24px", borderRadius: "12px", background: "transparent",
-                                        color: "#86868b", fontWeight: 600, fontSize: "15px", border: "1px solid rgba(0,0,0,0.1)",
-                                        cursor: "pointer", transition: "all 0.2s ease"
+                                        padding: "11px 20px", borderRadius: "8px", background: "transparent",
+                                        color: "#5F6672", fontWeight: 600, fontSize: "13px", border: "1px solid #E2E5E9",
+                                        cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px",
+                                        transition: "all 0.2s ease", fontFamily: "ui-monospace, monospace"
                                     }}
-                                    onMouseOver={(e) => e.currentTarget.style.color = "#1d1d1f"}
-                                    onMouseOut={(e) => e.currentTarget.style.color = "#86868b"}
+                                    onMouseOver={(e) => e.currentTarget.style.color = "#111318"}
+                                    onMouseOut={(e) => e.currentTarget.style.color = "#5F6672"}
                                 >
-                                    ← Back
+                                    <ArrowLeft size={14} />
+                                    Back
                                 </button>
                                 <button
                                     onClick={nextStep}
                                     disabled={!formData.budget}
                                     style={{
-                                        padding: "14px 32px", borderRadius: "12px", border: "none",
-                                        background: formData.budget ? "#2d6a4f" : "rgba(0,0,0,0.1)", color: formData.budget ? "#ffffff" : "rgba(0,0,0,0.4)",
-                                        fontWeight: 600, fontSize: "15px", cursor: formData.budget ? "pointer" : "not-allowed", transition: "all 0.2s ease"
+                                        padding: "11px 26px", borderRadius: "8px", border: "1px solid #E2E5E9",
+                                        background: formData.budget ? "#2563EB" : "#F1F3F5", color: formData.budget ? "#ffffff" : "#8A919C",
+                                        fontWeight: 600, fontSize: "13.5px", cursor: formData.budget ? "pointer" : "not-allowed",
+                                        display: "inline-flex", alignItems: "center", gap: "8px", transition: "all 0.2s ease",
+                                        fontFamily: "ui-monospace, monospace"
                                     }}
                                 >
-                                    Next →
+                                    Continue
+                                    <ArrowRight size={14} />
                                 </button>
                             </div>
                         </div>
@@ -456,79 +639,97 @@ export default function QuotePage() {
                     {/* STEP 4 */}
                     {currentStep === 4 && (
                         <div>
-                            <h2 style={{ fontSize: "24px", fontWeight: 700, color: "#1d1d1f", textAlign: "center", marginBottom: "32px" }}>
-                                Almost there! Tell me about your project.
+                            <h2 style={{ fontSize: "22px", fontWeight: 700, color: "#111318", textAlign: "center", marginBottom: "8px", fontFamily: "var(--font-display), sans-serif", letterSpacing: "-0.02em" }}>
+                                Project Details & Contact
                             </h2>
-                            <div style={{ display: "flex", flexDirection: "column", gap: "20px", width: "100%" }}>
+                            <p style={{ fontSize: "14px", color: "#5F6672", textAlign: "center", margin: "0 0 28px 0" }}>
+                                Tell me about the problems you&apos;re looking to solve.
+                            </p>
+                            <div style={{ display: "flex", flexDirection: "column", gap: "18px", width: "100%" }}>
                                 
                                 {/* Name */}
                                 <div>
-                                    <label style={{ display: "block", fontSize: "13px", color: "#6e6e73", fontWeight: 500, marginBottom: "6px" }}>Your name *</label>
+                                    <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12.5px", color: "#5F6672", fontWeight: 700, marginBottom: "6px", fontFamily: "ui-monospace, monospace", textTransform: "uppercase" }}>
+                                        <User size={13} color="#2563EB" />
+                                        Your Name *
+                                    </label>
                                     <input 
                                         type="text" 
                                         value={formData.name}
                                         onChange={(e) => updateData("name", e.target.value)}
+                                        placeholder="e.g. Alex Morgan"
                                         className="form-input"
-                                        style={{ width: "100%", padding: "14px 16px", border: `1px solid ${errors.name ? '#EF4444' : 'rgba(0,0,0,0.1)'}`, borderRadius: "12px", fontSize: "15px", color: "#1d1d1f", background: "#ffffff", boxSizing: "border-box" }}
+                                        style={{ width: "100%", padding: "11px 14px", border: `1px solid ${errors.name ? '#EF4444' : '#E2E5E9'}`, borderRadius: "8px", fontSize: "14px", color: "#111318", background: "#F7F8FA", boxSizing: "border-box", outline: "none" }}
                                     />
-                                    {errors.name && <div style={{ fontSize: "12px", color: "#EF4444", marginTop: "4px" }}>This field is required</div>}
+                                    {errors.name && <div style={{ fontSize: "12px", color: "#EF4444", marginTop: "4px" }}>Please enter your name</div>}
                                 </div>
 
                                 {/* Email */}
                                 <div>
-                                    <label style={{ display: "block", fontSize: "13px", color: "#6e6e73", fontWeight: 500, marginBottom: "6px" }}>Email address *</label>
+                                    <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12.5px", color: "#5F6672", fontWeight: 700, marginBottom: "6px", fontFamily: "ui-monospace, monospace", textTransform: "uppercase" }}>
+                                        <Mail size={13} color="#2563EB" />
+                                        Email Address *
+                                    </label>
                                     <input 
                                         type="email" 
                                         value={formData.email}
                                         onChange={(e) => updateData("email", e.target.value)}
+                                        placeholder="alex@company.com"
                                         className="form-input"
-                                        style={{ width: "100%", padding: "14px 16px", border: `1px solid ${errors.email ? '#EF4444' : 'rgba(0,0,0,0.1)'}`, borderRadius: "12px", fontSize: "15px", color: "#1d1d1f", background: "#ffffff", boxSizing: "border-box" }}
+                                        style={{ width: "100%", padding: "11px 14px", border: `1px solid ${errors.email ? '#EF4444' : '#E2E5E9'}`, borderRadius: "8px", fontSize: "14px", color: "#111318", background: "#F7F8FA", boxSizing: "border-box", outline: "none" }}
                                     />
-                                    {errors.email && <div style={{ fontSize: "12px", color: "#EF4444", marginTop: "4px" }}>This field is required</div>}
+                                    {errors.email && <div style={{ fontSize: "12px", color: "#EF4444", marginTop: "4px" }}>Please enter a valid email address</div>}
                                 </div>
 
                                 {/* Phone */}
                                 <div>
-                                    <label style={{ display: "block", fontSize: "13px", color: "#6e6e73", fontWeight: 500, marginBottom: "6px" }}>Phone number (optional)</label>
+                                    <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12.5px", color: "#5F6672", fontWeight: 700, marginBottom: "6px", fontFamily: "ui-monospace, monospace", textTransform: "uppercase" }}>
+                                        <Phone size={13} color="#2563EB" />
+                                        Phone Number (optional)
+                                    </label>
                                     <input 
                                         type="tel" 
                                         value={formData.phone}
                                         onChange={(e) => updateData("phone", e.target.value)}
+                                        placeholder="+1 (555) 000-0000"
                                         className="form-input"
-                                        style={{ width: "100%", padding: "14px 16px", border: "1px solid rgba(0,0,0,0.1)", borderRadius: "12px", fontSize: "15px", color: "#1d1d1f", background: "#ffffff", boxSizing: "border-box" }}
+                                        style={{ width: "100%", padding: "11px 14px", border: "1px solid #E2E5E9", borderRadius: "8px", fontSize: "14px", color: "#111318", background: "#F7F8FA", boxSizing: "border-box", outline: "none" }}
                                     />
                                 </div>
 
                                 {/* Message */}
                                 <div>
-                                    <label style={{ display: "block", fontSize: "13px", color: "#6e6e73", fontWeight: 500, marginBottom: "6px" }}>Briefly describe what you need *</label>
+                                    <label style={{ display: "flex", alignItems: "center", gap: "6px", fontSize: "12.5px", color: "#5F6672", fontWeight: 700, marginBottom: "6px", fontFamily: "ui-monospace, monospace", textTransform: "uppercase" }}>
+                                        <MessageSquare size={13} color="#2563EB" />
+                                        Describe your workflow or requirements *
+                                    </label>
                                     <textarea 
                                         value={formData.message}
                                         onChange={(e) => updateData("message", e.target.value)}
                                         rows={4}
+                                        placeholder="What manual process needs automation? What systems or APIs need to connect?"
                                         className="form-input"
-                                        style={{ width: "100%", padding: "14px 16px", border: `1px solid ${errors.message ? '#EF4444' : 'rgba(0,0,0,0.1)'}`, borderRadius: "12px", fontSize: "15px", color: "#1d1d1f", background: "#ffffff", boxSizing: "border-box", resize: "vertical" }}
+                                        style={{ width: "100%", padding: "11px 14px", border: `1px solid ${errors.message ? '#EF4444' : '#E2E5E9'}`, borderRadius: "8px", fontSize: "14px", color: "#111318", background: "#F7F8FA", boxSizing: "border-box", resize: "vertical", outline: "none" }}
                                     />
-                                    {errors.message && <div style={{ fontSize: "12px", color: "#EF4444", marginTop: "4px" }}>This field is required</div>}
+                                    {errors.message && <div style={{ fontSize: "12px", color: "#EF4444", marginTop: "4px" }}>Please describe your project needs</div>}
                                 </div>
-
-                                {/* Botcheck */}
-                                <input type="checkbox" name="botcheck" className="hidden" style={{ display: "none" }} tabIndex={-1} autoComplete="off" />
 
                             </div>
 
-                            <div style={{ display: "flex", gap: "12px", marginTop: "32px", width: "100%" }}>
+                            <div style={{ display: "flex", gap: "12px", marginTop: "28px", width: "100%" }}>
                                 <button
                                     onClick={prevStep}
                                     style={{
-                                        padding: "14px 24px", borderRadius: "12px", background: "transparent",
-                                        color: "#86868b", fontWeight: 600, fontSize: "15px", border: "1px solid rgba(0,0,0,0.1)",
-                                        cursor: "pointer", transition: "all 0.2s ease"
+                                        padding: "12px 20px", borderRadius: "8px", background: "transparent",
+                                        color: "#5F6672", fontWeight: 600, fontSize: "13px", border: "1px solid #E2E5E9",
+                                        cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px",
+                                        transition: "all 0.2s ease", fontFamily: "ui-monospace, monospace"
                                     }}
-                                    onMouseOver={(e) => e.currentTarget.style.color = "#1d1d1f"}
-                                    onMouseOut={(e) => e.currentTarget.style.color = "#86868b"}
+                                    onMouseOver={(e) => e.currentTarget.style.color = "#111318"}
+                                    onMouseOut={(e) => e.currentTarget.style.color = "#5F6672"}
                                 >
-                                    ← Back
+                                    <ArrowLeft size={14} />
+                                    Back
                                 </button>
                                 <button
                                     onClick={handleSubmit}
@@ -536,12 +737,26 @@ export default function QuotePage() {
                                     className="send-button"
                                     style={{
                                         flex: 1,
-                                        height: "54px", background: "#2d6a4f", color: "#ffffff",
-                                        fontSize: "17px", fontWeight: 700, borderRadius: "14px", border: "none", cursor: isSubmitting ? "not-allowed" : "pointer",
-                                        boxShadow: "0 4px 16px rgba(45,106,79,0.2)", position: "relative", overflow: "hidden", transition: "all 0.2s"
+                                        height: "48px", background: "#2563EB", color: "#ffffff",
+                                        fontSize: "14px", fontWeight: 700, borderRadius: "8px", border: "none",
+                                        cursor: isSubmitting ? "not-allowed" : "pointer",
+                                        boxShadow: "0 1px 3px rgba(37,99,235,0.25)",
+                                        display: "inline-flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        gap: "10px",
+                                        transition: "all 0.2s",
+                                        fontFamily: "ui-monospace, monospace"
                                     }}
                                 >
-                                    {isSubmitting ? "Sending..." : "Send Request"}
+                                    {isSubmitting ? (
+                                        <span>Dispatching Request...</span>
+                                    ) : (
+                                        <>
+                                            <span>Send Project Inquiry</span>
+                                            <Send size={15} />
+                                        </>
+                                    )}
                                 </button>
                             </div>
                         </div>
@@ -549,95 +764,144 @@ export default function QuotePage() {
 
                     {/* STEP 5 / SUCCESS */}
                     {currentStep === 5 && (
-                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "40px 0 20px" }}>
-                            <div className="success-check-container" style={{ position: "relative", width: "80px", height: "80px", marginBottom: "24px" }}>
-                                <svg width="80" height="80" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle className="success-circle" cx="40" cy="40" r="38" stroke="#2d6a4f" strokeWidth="3" fill="transparent" strokeDasharray="240" strokeDashoffset="240" />
-                                    <path className="success-path" d="M25 40 L35 50 L55 28" stroke="#2d6a4f" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" strokeDasharray="50" strokeDashoffset="50" />
-                                </svg>
+                        <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "24px 0 12px" }}>
+                            
+                            <div style={{
+                                width: "64px",
+                                height: "64px",
+                                borderRadius: "50%",
+                                background: "rgba(37,99,235,0.1)",
+                                color: "#2563EB",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                marginBottom: "20px"
+                            }}>
+                                <CheckCircle2 size={36} />
                             </div>
-                            <h2 style={{ fontSize: "28px", fontWeight: 700, color: "#1d1d1f", margin: "0 0 12px 0" }}>
-                                You're all set!
+
+                            <h2 style={{ fontSize: "24px", fontWeight: 800, color: "#111318", margin: "0 0 8px 0", fontFamily: "var(--font-display), sans-serif", letterSpacing: "-0.02em" }}>
+                                Request Received!
                             </h2>
-                            <p style={{ fontSize: "16px", color: "#6e6e73", maxWidth: "400px", lineHeight: 1.5, margin: "0 0 32px 0" }}>
-                                Thanks, {formData.name}! I'll review your request and get back to you within 24 hours.
+                            <p style={{ fontSize: "14.5px", color: "#5F6672", maxWidth: "440px", lineHeight: 1.6, margin: "0 0 24px 0" }}>
+                                Thank you, <strong style={{ color: "#111318" }}>{formData.name}</strong>. Your inquiry has been routed directly to Raj Ponkiya.
+                            </p>
+
+                            {/* Summary Receipt Card */}
+                            <div style={{
+                                width: "100%",
+                                background: "#F7F8FA",
+                                border: "1px solid #E2E5E9",
+                                borderRadius: "12px",
+                                padding: "18px",
+                                textAlign: "left",
+                                marginBottom: "24px",
+                                boxSizing: "border-box"
+                            }}>
+                                <div style={{ fontSize: "10.5px", fontWeight: 700, textTransform: "uppercase", letterSpacing: "0.08em", color: "#2563EB", marginBottom: "12px", display: "flex", alignItems: "center", gap: "6px", fontFamily: "ui-monospace, monospace" }}>
+                                    <ShieldCheck size={14} />
+                                    Submission Summary
+                                </div>
+                                <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "10px", fontSize: "12.5px" }}>
+                                    <div>
+                                        <span style={{ color: "#8A919C", display: "block", fontSize: "10.5px", fontFamily: "ui-monospace, monospace" }}>Service Category</span>
+                                        <strong style={{ color: "#111318" }}>{formData.service || "AI Workflow"}</strong>
+                                    </div>
+                                    <div>
+                                        <span style={{ color: "#8A919C", display: "block", fontSize: "10.5px", fontFamily: "ui-monospace, monospace" }}>Timeline</span>
+                                        <strong style={{ color: "#111318" }}>{formData.timeline || "Standard"}</strong>
+                                    </div>
+                                    <div>
+                                        <span style={{ color: "#8A919C", display: "block", fontSize: "10.5px", fontFamily: "ui-monospace, monospace" }}>Budget Range</span>
+                                        <strong style={{ color: "#111318" }}>{formData.budget || "Custom"}</strong>
+                                    </div>
+                                    <div>
+                                        <span style={{ color: "#8A919C", display: "block", fontSize: "10.5px", fontFamily: "ui-monospace, monospace" }}>Contact Email</span>
+                                        <strong style={{ color: "#111318" }}>{formData.email || "ponkiyaraj7@gmail.com"}</strong>
+                                    </div>
+                                </div>
+                            </div>
+
+                            {/* Reassurance Message */}
+                            <p style={{ fontSize: "13px", color: "#5F6672", lineHeight: 1.55, maxWidth: "460px", margin: "0 0 28px 0" }}>
+                                I will review your requirements, analyze technical feasibility, and respond with an architecture proposal within <strong>24 hours</strong>.
                             </p>
                             
-                            <Link href="/" style={{
-                                padding: "14px 32px", border: "1px solid rgba(0,0,0,0.1)", borderRadius: "12px",
-                                color: "#1d1d1f", fontSize: "16px", fontWeight: 600, textDecoration: "none", marginBottom: "32px",
-                                transition: "all 0.2s ease"
-                            }}
-                            onMouseEnter={(e) => { e.currentTarget.style.background = "rgba(0,0,0,0.03)" }}
-                            onMouseLeave={(e) => { e.currentTarget.style.background = "transparent" }}>
-                                ← Back to portfolio
-                            </Link>
+                            {/* Action Buttons */}
+                            <div style={{ display: "flex", gap: "10px", flexWrap: "wrap", justifyContent: "center", width: "100%" }}>
+                                <Link href="/" style={{
+                                    padding: "10px 20px",
+                                    border: "1px solid #E2E5E9",
+                                    borderRadius: "8px",
+                                    color: "#111318",
+                                    fontSize: "13.5px",
+                                    fontWeight: 600,
+                                    textDecoration: "none",
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    transition: "all 0.2s ease",
+                                    fontFamily: "ui-monospace, monospace"
+                                }}
+                                onMouseEnter={(e) => { e.currentTarget.style.background = "#F7F8FA"; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = "transparent"; }}>
+                                    <ArrowLeft size={14} />
+                                    Back to Portfolio
+                                </Link>
 
-                            <p style={{ fontSize: "13px", color: "#86868b", margin: 0 }}>
-                                You can also reach me directly through the contact section
-                            </p>
+                                <a href="mailto:ponkiyaraj7@gmail.com" style={{
+                                    padding: "10px 20px",
+                                    background: "#2563EB",
+                                    borderRadius: "8px",
+                                    color: "#ffffff",
+                                    fontSize: "13.5px",
+                                    fontWeight: 600,
+                                    textDecoration: "none",
+                                    display: "inline-flex",
+                                    alignItems: "center",
+                                    gap: "8px",
+                                    transition: "all 0.2s ease",
+                                    fontFamily: "ui-monospace, monospace",
+                                    boxShadow: "0 1px 3px rgba(37,99,235,0.25)"
+                                }}
+                                onMouseEnter={(e) => { e.currentTarget.style.background = "#1D4ED8"; }}
+                                onMouseLeave={(e) => { e.currentTarget.style.background = "#2563EB"; }}>
+                                    <Mail size={14} />
+                                    Direct Email
+                                </a>
+                            </div>
+
                         </div>
                     )}
 
                 </div>
             </div>
 
-            {/* Bottom Quote */}
-            <div className="bottom-quote" style={{ marginTop: "32px", fontSize: "14px", fontStyle: "italic", color: "#86868b", textAlign: "center" }}>
-                "No commitment. Just a conversation."
+            {/* Bottom Proof */}
+            <div className="bottom-quote" style={{ marginTop: "28px", fontSize: "12px", color: "#5F6672", textAlign: "center", display: "flex", alignItems: "center", gap: "8px", fontFamily: "ui-monospace, monospace" }}>
+                <ShieldCheck size={14} color="#2563EB" />
+                Direct review & engineering response by Raj Ponkiya • Zero commitment
             </div>
 
             <style dangerouslySetInnerHTML={{__html: `
-                .quote-card {
-                    /* Initial state handled by JS, but fallback here */
-                }
                 .form-input:focus {
-                    border-color: #2d6a4f !important;
-                    box-shadow: 0 0 0 3px rgba(45,106,79,0.1) !important;
+                    border-color: #2563EB !important;
+                    box-shadow: 0 0 0 3px rgba(37,99,235,0.12) !important;
                     outline: none;
                 }
                 .send-button:hover:not(:disabled) {
-                    background: #3a8a64 !important;
-                    transform: translateY(-2px);
-                    box-shadow: 0 6px 20px rgba(45,106,79,0.25) !important;
+                    background: #1D4ED8 !important;
+                    transform: translateY(-1px);
+                    box-shadow: 0 6px 22px rgba(45,106,79,0.3) !important;
                 }
                 .send-button:active:not(:disabled) {
                     transform: scale(0.98);
                 }
-                .send-button::after {
-                    content: '';
-                    position: absolute;
-                    top: 0; left: -100%; width: 50%; height: 100%;
-                    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-                    transform: skewX(-20deg);
-                    transition: none;
-                }
-                .send-button:hover:not(:disabled)::after {
-                    left: 150%;
-                    transition: left 0.6s ease-in-out;
-                }
-                
                 @media (max-width: 600px) {
                     .quote-card {
-                        padding: 32px 24px !important;
-                        margin: 16px;
+                        padding: 28px 20px !important;
+                        border-radius: 20px !important;
                     }
-                    .step-1-grid {
-                        grid-template-columns: 1fr !important;
-                    }
-                }
-
-                @keyframes drawCircle {
-                    to { stroke-dashoffset: 0; }
-                }
-                @keyframes drawPath {
-                    to { stroke-dashoffset: 0; }
-                }
-                .success-circle {
-                    animation: drawCircle 0.6s ease-out forwards;
-                }
-                .success-path {
-                    animation: drawPath 0.3s ease-out 0.6s forwards;
                 }
             `}} />
         </div>

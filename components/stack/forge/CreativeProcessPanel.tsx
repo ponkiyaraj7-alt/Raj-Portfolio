@@ -6,50 +6,51 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { motion, useReducedMotion, AnimatePresence } from "framer-motion";
 import ProcessStage from "./ProcessStage";
+import { Compass, Boxes, Zap, Sparkles, Rocket, Clock, GitCommit, Bot, Brain } from "lucide-react";
 
 const STAGES = [
   {
-    icon: "🎯",
+    icon: <Compass className="w-5 h-5 text-emerald-400" />,
     title: "DISCOVER",
     descriptor: "Research",
     detail: "Diving deep into user pain points, market gaps, and emerging tech. Every great product starts with understanding.",
     color: "#52b788",
   },
   {
-    icon: "🔬",
+    icon: <Boxes className="w-5 h-5 text-purple-400" />,
     title: "ARCHITECT",
     descriptor: "System Design",
     detail: "Mapping data flows, choosing the right stack, planning for scale. Building the blueprint before the code.",
     color: "#A855F7",
   },
   {
-    icon: "⚡",
+    icon: <Zap className="w-5 h-5 text-amber-400" />,
     title: "PROTOTYPE",
     descriptor: "Build Fast",
     detail: "Vibe-coding with AI, rapid iterations, failing forward fast. Speed beats perfection in the early days.",
     color: "#F59E0B",
   },
   {
-    icon: "🎨",
+    icon: <Sparkles className="w-5 h-5 text-pink-400" />,
     title: "POLISH",
     descriptor: "Craft",
     detail: "Pixel-perfect UI, micro-interactions, performance tuning. The details make the difference.",
     color: "#EC4899",
   },
   {
-    icon: "🚀",
+    icon: <Rocket className="w-5 h-5 text-cyan-400" />,
     title: "SHIP",
     descriptor: "Deploy",
-    detail: "CI/CD pipelines, monitoring, and celebrating with chai ☕. Nothing matters until it ships.",
+    detail: "CI/CD pipelines, automated testing, and zero-downtime releases. Nothing matters until it ships.",
     color: "#61DAFB",
   },
 ];
 
 const METRICS = [
-  { value: "12", label: "coffees", icon: "☕", color: "#8B5CF6" },
-  { value: "47", label: "commits", icon: "🔥", color: "#F97316" },
-  { value: "3", label: "shipping", icon: "🚀", color: "#52b788" },
-  { value: "94%", label: "AI accuracy", icon: "🤖", color: "#A855F7" },
+  { value: "12", label: "focus hrs", icon: <Clock className="w-3.5 h-3.5 text-purple-400" />, color: "#8B5CF6" },
+  { value: "47", label: "commits", icon: <GitCommit className="w-3.5 h-3.5 text-orange-400" />, color: "#F97316" },
+  { value: "3", label: "deploys", icon: <Rocket className="w-3.5 h-3.5 text-emerald-400" />, color: "#52b788" },
+  { value: "94%", label: "AI accuracy", icon: <Bot className="w-3.5 h-3.5 text-purple-400" />, color: "#A855F7" },
 ];
 
 const QUOTES = [
@@ -243,7 +244,7 @@ export default function CreativeProcessPanel() {
               } : {}}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              <span className="text-2xl">🧠</span>
+              <Brain className="w-6 h-6 text-emerald-400" />
             </motion.div>
 
             <div>

@@ -24,43 +24,42 @@ const STACK_LANES: StackLane[] = [
     id: "ai",
     kicker: "AI systems",
     title: "Useful intelligence, wired into real work.",
-    metric: "12+ integrations",
-    proof: "Agents, RAG, voice, automation",
-    note: "For products that need reasoning, retrieval, speech, and reliable task flow.",
+    metric: "Autonomous Agents",
+    proof: "Agents, RAG, tool use, workflow automation",
+    note: "For systems that need reasoning, retrieval, structured extraction, and reliable task flow.",
     accent: "#1f7a5c",
     secondary: "#74c69d",
     tools: ["Generative AI", "OpenAI", "RAG", "LangGraph"],
   },
   {
     id: "web",
-    kicker: "Web products",
-    title: "Fast surfaces that feel designed, not assembled.",
-    metric: "30+ shipped builds",
-    proof: "SaaS, commerce, dashboards",
-    note: "For websites and apps where polish, speed, and maintainable systems matter.",
+    kicker: "Backend & APIs",
+    title: "High-throughput pipelines and data services.",
+    metric: "FastAPI & Python",
+    proof: "Python, FastAPI, Node.js, PostgreSQL",
+    note: "For backend architectures that connect AI reasoning to external business tools and databases.",
     accent: "#2563eb",
     secondary: "#7dd3fc",
-    tools: ["Next.js", "React", "TypeScript", "Node.js"],
+    tools: ["Python", "FastAPI", "Node.js", "PostgreSQL"],
   },
   {
     id: "mobile",
-    kicker: "Android apps",
-    title: "Mobile experiences with product discipline.",
-    metric: "4 yrs Flutter",
-    proof: "AI voice, subscriptions, Firebase",
-    note: "For app ideas that need clean architecture, store-ready flows, and sharp UI.",
+    kicker: "Full-Stack AI",
+    title: "Production-ready interfaces for intelligent apps.",
+    metric: "Next.js & React",
+    proof: "Next.js, React, TypeScript, pgvector",
+    note: "For interactive, responsive applications that expose AI workflows directly to end users.",
     accent: "#0f8f84",
     secondary: "#22d3ee",
-    tools: ["Flutter", "Dart", "Firebase", "RevenueCat"],
+    tools: ["Next.js", "TypeScript", "React", "pgvector"],
   },
 ];
 
 const CATEGORY_ORDER: SkillCategory[] = [
-  "AI & GenAI",
-  "Web",
-  "Mobile",
-  "Infra",
-  "DesignOps",
+  "AI & LLMs",
+  "Backend",
+  "Frontend",
+  "Data & Infra",
 ];
 
 function getSkill(name: string) {
@@ -235,8 +234,8 @@ export default function StackSection() {
             <span className="section-kicker">Selected stack</span>
             <h2>A few tools. A lot of leverage.</h2>
             <p>
-              I keep the visible stack tight: AI systems, web products, and Android apps
-              built with tools that survive real users.
+              I focus on a practical technical stack: AI agents, LLM pipelines,
+              and full-stack architectures built to turn complex processes into reliable workflows.
             </p>
 
             <div className="stack-actions">
@@ -251,14 +250,14 @@ export default function StackSection() {
                 </span>
                 <span>
                   <strong>Download CV</strong>
-                  <small>PDF • software engineer</small>
+                  <small>PDF • Associate AI Developer</small>
                 </span>
               </a>
 
               <div className="stack-proof" aria-label="Core capabilities">
-                <span>AI workflows</span>
-                <span>Web products</span>
-                <span>Android apps</span>
+                <span>AI Automation</span>
+                <span>LLMs & Agents</span>
+                <span>Full-Stack AI</span>
               </div>
             </div>
           </div>

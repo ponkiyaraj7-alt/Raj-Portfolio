@@ -51,7 +51,7 @@ export default function DeadMock() {
 
       {/* Tagline */}
       <div style={{ fontSize: 32, fontWeight: 700, lineHeight: 1.05, color: "#2a2a2a" }}>
-        Welcome to my Website! <span aria-hidden>🚀✨</span>
+        Welcome to my Website!
       </div>
 
       {/* Body */}

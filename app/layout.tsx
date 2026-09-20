@@ -30,9 +30,9 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Raj Ponkiya | Associate AI Developer & Automation Engineer",
+  title: "Raj Ponkiya | Associate AI Developer — AI Automation & Workflows",
   description:
-    "Portfolio of Raj Ponkiya, an Associate AI Developer specializing in AI development, AI automation, LLM-based solutions, AI agents, and intelligent workflow systems.",
+    "Raj Ponkiya is an Associate AI Developer engineering practical AI systems, LLM applications, and autonomous agents that turn repetitive business processes into automated workflows.",
   icons: {
     icon: "/icon.svg",
     shortcut: "/icon.svg",
@@ -43,18 +43,19 @@ export const metadata: Metadata = {
     "Associate AI Developer",
     "AI Developer",
     "AI Automation",
-    "LLM Solutions",
+    "LLM Applications",
     "AI Agents",
-    "Workflow Automation",
+    "Agentic Workflows",
+    "RAG Systems",
+    "Python",
     "LangChain",
     "LangGraph",
-    "Python",
     "Next.js",
   ],
   openGraph: {
-    title: "Raj Ponkiya | Associate AI Developer & Automation Engineer",
+    title: "Raj Ponkiya | Associate AI Developer",
     description:
-      "Associate AI Developer specializing in building practical AI solutions, AI agents, LLMs, and workflow automation.",
+      "Building practical AI systems, autonomous agents, and intelligent workflows that turn manual business processes into automated pipelines.",
     url: "https://github.com/ponkiyaraj7-alt",
     siteName: "Raj Ponkiya Portfolio",
     locale: "en_US",

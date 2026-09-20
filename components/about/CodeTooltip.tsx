@@ -4,6 +4,7 @@
 // Context-aware tooltips that appear when hovering over code lines
 
 import { motion } from "framer-motion";
+import { Bot } from "lucide-react";
 
 interface CodeTooltipProps {
   type: string;
@@ -97,7 +98,7 @@ const tooltipConfigs: Record<string, {
       <div className="space-y-2">
         <p className="text-white/80 text-sm">Integrating agentic AI into development workflows</p>
         <div className="flex items-center gap-2">
-          <span className="text-2xl">🤖</span>
+          <Bot className="w-5 h-5 text-emerald-400" />
           <span className="text-xs text-white/60">Claude, GPT, Custom Agents</span>
         </div>
       </div>
@@ -145,32 +146,32 @@ const tooltipConfigs: Record<string, {
     ),
   },
   projects: {
-    title: "30+ Projects Shipped",
+    title: "Process Automation",
     accent: "#a855f7",
     content: (
       <div className="space-y-2">
-        <p className="text-white/80 text-sm">From MVPs to enterprise systems</p>
+        <p className="text-white/80 text-sm">Turning manual operations into reliable workflows</p>
         <div className="grid grid-cols-2 gap-2 text-xs">
           <div className="bg-white/5 rounded p-2">
-            <div className="text-white/90 font-semibold">12</div>
-            <div className="text-white/50">SaaS Platforms</div>
+            <div className="text-white/90 font-semibold">Workflow</div>
+            <div className="text-white/50">Automation</div>
           </div>
           <div className="bg-white/5 rounded p-2">
-            <div className="text-white/90 font-semibold">8</div>
-            <div className="text-white/50">Mobile Apps</div>
+            <div className="text-white/90 font-semibold">RAG & Tools</div>
+            <div className="text-white/50">Retrieval & APIs</div>
           </div>
         </div>
       </div>
     ),
   },
   integrations: {
-    title: "12 AI Integrations",
+    title: "AI & Workflow Integrations",
     accent: "#06b6d4",
     content: (
       <div className="space-y-2">
-        <p className="text-white/80 text-sm">OpenAI, Anthropic, and custom model deployments</p>
+        <p className="text-white/80 text-sm">Connecting LLMs with business tools and databases</p>
         <div className="flex flex-wrap gap-1">
-          {["GPT-4", "Claude", "Whisper", "Embeddings", "Fine-tuning"].map((tech) => (
+          {["OpenAI", "Claude", "LangGraph", "LangChain", "FastAPI", "pgvector"].map((tech) => (
             <span key={tech} className="px-1.5 py-0.5 bg-cyan-500/20 rounded text-xs text-cyan-300">
               {tech}
             </span>
@@ -180,12 +181,12 @@ const tooltipConfigs: Record<string, {
     ),
   },
   philosophy: {
-    title: "Build Software People Enjoy",
+    title: "Process to Automation",
     accent: "#f97316",
     content: (
       <div className="space-y-2">
         <p className="text-white/80 text-sm italic">
-          "The best software is not just functional, but deeply intuitive and beautifully crafted."
+          "Turn repetitive manual work into intelligent, reliable workflows that deliver measurable outcomes."
         </p>
         <div className="flex items-center gap-2 text-xs text-white/50">
           <span>Design</span>
