@@ -134,144 +134,14 @@ export const MARQUEE_TECH = [
 
 
 // ─── Website & Product Projects ──────────────────────────────────────────────
-
-export const websiteProjects: Project[] = [
-  {
-    id: "ai-platform",
-    name: "AI Knowledge Platform",
-    tagline: "Automated Document Analysis & Knowledge Retrieval",
-    type: "AI SaaS & Workflow System",
-    description:
-      "A document intelligence platform that automates document extraction, semantic chunking, and contextual question-answering with verifiable citations.",
-    caseStudy: `PROBLEM: Knowledge workers spent hours manually reviewing lengthy operational manuals, invoices, and contracts to extract key data points.
-
-SOLUTION: Engineered an automated retrieval pipeline with a Next.js interface that ingests unstructured files, generates dense vector embeddings, and enables natural language inquiry.
-
-AI COMPONENT: OpenAI embeddings paired with structured LLM reasoning for multi-document synthesis and verified source citing.
-
-AUTOMATION: Automatic PDF/DOCX parsing on upload, text chunking, embedding generation, and automated vector store re-indexing without human intervention.
-
-TECHNOLOGY: Python, FastAPI, LangChain, PostgreSQL, pgvector, Next.js, TypeScript.
-
-OUTCOME: Reduced manual document lookup time to seconds, replacing manual search with verifiable, cited AI extraction.`,
-    stack: ["Python", "FastAPI", "LangChain", "pgvector", "Next.js", "TypeScript"],
-    color: "#0EA5E9",
-    liveUrl: "#",
-    githubUrl: "#",
-    imageUrl: "/Dashboard.webp",
-  },
-  {
-    id: "content-studio",
-    name: "ContentStudio Workflow",
-    tagline: "Automated Digital Asset Pipeline",
-    type: "Intelligent SaaS Platform",
-    description:
-      "A media asset automation platform that standardizes asset preparation, background job queuing, and automated metadata indexing.",
-    caseStudy: `PROBLEM: Digital teams faced high error rates and bottlenecks when manually formatting, labeling, and tagging hundreds of media assets every week.
-
-SOLUTION: Developed an asset processing platform with automated background queue workers and real-time state synchronization.
-
-AI COMPONENT: Vision and text LLM integration to automatically generate relevant tags, clean metadata summaries, and categorize media.
-
-AUTOMATION: File upload triggers background queue jobs via Redis, performs automated validation, indexes metadata, and broadcasts progress via WebSockets.
-
-TECHNOLOGY: Next.js, Node.js, Redis, Bull Queue, Tailwind CSS, PostgreSQL.
-
-OUTCOME: Replaced manual file tagging with automated background processing pipelines.`,
-    stack: ["Next.js", "TypeScript", "Node.js", "Redis", "PostgreSQL"],
-    color: "#EC4899",
-    liveUrl: "#",
-    githubUrl: "#",
-    imageUrl: "/Dashboard.webp",
-  },
-  {
-    id: "commerce-hub",
-    name: "Commerce Hub Automation",
-    tagline: "High-Performance Modern Storefront",
-    type: "E-Commerce System",
-    description:
-      "An automated headless commerce storefront engineered with real-time stock sync, webhook-driven order fulfillment, and checkout flows.",
-    caseStudy: `PROBLEM: Traditional storefronts suffered from sluggish page transitions, manual inventory adjustments, and dropped customer checkouts.
-
-SOLUTION: Built a headless storefront leveraging server components, instant search queries, and programmatic webhook handlers.
-
-AI COMPONENT: Smart search indexing and semantic product recommendations to match customer intent with product catalog entries.
-
-AUTOMATION: Automated inventory status sync, webhook-driven payment confirmations via Stripe, and dynamic order tracking.
-
-TECHNOLOGY: Next.js App Router, TypeScript, Tailwind CSS, Stripe, Vercel.
-
-OUTCOME: Streamlined the purchase pipeline from discovery to payment fulfillment with zero manual order intervention.`,
-    stack: ["Next.js", "TypeScript", "Tailwind CSS", "Stripe", "Vercel"],
-    color: "#C4A265",
-    liveUrl: "#",
-    githubUrl: "#",
-    imageUrl: "/Dashboard.webp",
-  },
-  {
-    id: "artisan-bakery",
-    name: "Order Automation System",
-    tagline: "Menu Scheduling & Automated Ordering",
-    type: "Web Application",
-    description:
-      "A digital ordering platform with automated slot reservation, scheduled inventory windows, and real-time order routing.",
-    caseStudy: `PROBLEM: Local food businesses relied on manual phone and chat orders, leading to order mix-ups, double bookings, and stock miscalculations.
-
-SOLUTION: Built an interactive web app with structured menu slots, dynamic validation, and instant confirmation routing.
-
-AI COMPONENT: Automated natural language query handling for order inquiries and dietary preferences.
-
-AUTOMATION: Automated availability tracking, dynamic order slot locks, and instant notification dispatches upon order submission.
-
-TECHNOLOGY: React, Node.js, Express, MongoDB, Tailwind CSS.
-
-OUTCOME: Transitioned manual phone-based ordering into a structured, automated self-service system.`,
-    stack: ["React", "Node.js", "Express", "MongoDB", "Tailwind CSS"],
-    color: "#D97706",
-    liveUrl: "#",
-    githubUrl: "#",
-    imageUrl: "/Dashboard.webp",
-  },
-];
+// Ready for real project case studies
+export const websiteProjects: Project[] = [];
 
 // ─── App Projects ─────────────────────────────────────────────────────────────
-
-export const appProjects: Project[] = [
-  {
-    id: "cloud-pulse",
-    name: "CloudPulse Monitor",
-    tagline: "Real-Time Systems Telemetry & Alerting",
-    type: "Telemetry & Automated Alerting",
-    description:
-      "A systems monitoring utility providing real-time telemetry streaming, automated threshold alerts, and centralized health tracking.",
-    caseStudy: `PROBLEM: Engineering operations lacked an immediate, consolidated view of microservice uptime, requiring manual dashboard inspections.
-
-SOLUTION: Built a multi-service monitoring app with real-time data streaming, offline caching, and rule-based incident alerts.
-
-AI COMPONENT: Automated anomaly detection heuristic on inbound latency metrics to flag abnormal spikes before service disruption.
-
-AUTOMATION: Background event listeners trigger automated push alerts when thresholds are breached, routing incidents automatically.
-
-TECHNOLOGY: Flutter, Dart, Firebase, REST APIs, TypeScript.
-
-OUTCOME: Automated infrastructure health tracking with zero manual polling.`,
-    stack: ["Flutter", "Dart", "Firebase", "REST APIs", "TypeScript"],
-    color: "#8B5CF6",
-    liveUrl: "#",
-    githubUrl: "#",
-    imageUrl: "/Dashboard.webp",
-  },
-];
+export const appProjects: Project[] = [];
 
 // ─── Unified Projects (Home Showcase) ────────────────────────────────────────
-
-export const allProjects: Project[] = [
-  websiteProjects[0],  // AI Knowledge Platform
-  websiteProjects[1],  // ContentStudio Workflow
-  websiteProjects[2],  // Commerce Hub Automation
-  appProjects[0],      // CloudPulse Monitor
-  websiteProjects[3],  // Order Automation System
-];
+export const allProjects: Project[] = [];
 
 // ─── Phase 2 Architectural Data Exports ─────────────────────────────────────
 export * from "./workflow";

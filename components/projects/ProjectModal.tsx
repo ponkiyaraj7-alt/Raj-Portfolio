@@ -520,7 +520,7 @@ export default function ProjectModal({
               {/* Links */}
               {(hasLive || hasGithub) && (
                 <div style={{ display: "flex", gap: "12px", paddingTop: "8px" }}>
-                  {hasLive && (
+                  {hasLive && project.liveUrl && (
                     <Link
                       href={project.liveUrl}
                       target="_blank"
@@ -543,7 +543,7 @@ export default function ProjectModal({
                       Live Demo
                     </Link>
                   )}
-                  {hasGithub && (
+                  {hasGithub && project.githubUrl && (
                     <Link
                       href={project.githubUrl}
                       target="_blank"

@@ -55,7 +55,7 @@ export default function FlutterPhoneCell({ skill, index = 0, span }: { skill: Sk
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
             <span style={{ width: 8, height: 8, borderRadius: "50%", background: skill.color, boxShadow: `0 0 10px ${skill.color}` }} />
             <span style={{ fontSize: 10, fontWeight: 800, letterSpacing: "0.18em", textTransform: "uppercase", color: skill.color, fontFamily: "var(--font-mono), monospace" }}>
-              {skill.name} · CLOUDPULSE
+              {skill.name} · SYSTEM TELEMETRY
             </span>
           </div>
           <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: "0.14em", color: "rgba(148,163,184,0.45)", fontFamily: "var(--font-mono), monospace" }}>

@@ -78,11 +78,7 @@ export const EXPERIENCES: ExperienceItem[] = [
       "fullstack-ai",
       "process-automation",
     ],
-    relatedProjects: [
-      "ai-knowledge-platform",
-      "content-studio-workflow",
-      "commerce-hub-automation",
-    ],
+    relatedProjects: [],
   },
 ];
 

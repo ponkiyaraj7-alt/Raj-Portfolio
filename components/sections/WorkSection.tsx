@@ -194,21 +194,107 @@ export default function WorkSection() {
           })}
         </div>
 
-        {/* ── Project cards grid ── */}
-        <div
-          ref={gridRef}
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
-            gap: "24px",
-          }}
-        >
-          {filtered.map((project) => (
-            <div key={project.id} className="project-card-anim">
-              <ProjectCard project={project} onOpen={setOpenProject} />
+        {/* ── Project cards grid or Project-Ready State ── */}
+        {filtered.length > 0 ? (
+          <div
+            ref={gridRef}
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+              gap: "24px",
+            }}
+          >
+            {filtered.map((project) => (
+              <div key={project.id} className="project-card-anim">
+                <ProjectCard project={project} onOpen={setOpenProject} />
+              </div>
+            ))}
+          </div>
+        ) : (
+          <div
+            style={{
+              borderRadius: "16px",
+              border: "1.5px dashed #D3D8E0",
+              background: "#FAFBFC",
+              padding: "56px 32px",
+              textAlign: "center",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              gap: "14px",
+              maxWidth: "680px",
+              margin: "0 auto",
+            }}
+          >
+            <div
+              style={{
+                width: "44px",
+                height: "44px",
+                borderRadius: "12px",
+                background: "rgba(37,99,235,0.08)",
+                border: "1px solid rgba(37,99,235,0.18)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#2563EB",
+              }}
+            >
+              <Layers size={22} />
             </div>
-          ))}
-        </div>
+            <div>
+              <h3
+                style={{
+                  fontSize: "18px",
+                  fontWeight: 700,
+                  color: "#111318",
+                  margin: "0 0 6px",
+                  fontFamily: "var(--font-display), sans-serif",
+                }}
+              >
+                Production Systems In Ingestion
+              </h3>
+              <p
+                style={{
+                  fontSize: "14px",
+                  color: "#5F6672",
+                  margin: 0,
+                  maxWidth: "460px",
+                  lineHeight: 1.6,
+                }}
+              >
+                Architecture schemas, telemetry breakdowns, and verified production case studies are being linked. Real project deployments will appear here directly.
+              </p>
+            </div>
+            <div
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "4px 12px",
+                borderRadius: "999px",
+                background: "#FFFFFF",
+                border: "1px solid #E2E5E9",
+                fontSize: "11px",
+                fontFamily: "ui-monospace, monospace",
+                fontWeight: 600,
+                color: "#2563EB",
+                marginTop: "6px",
+              }}
+            >
+              <span
+                style={{
+                  width: "6px",
+                  height: "6px",
+                  borderRadius: "50%",
+                  background: "#10B981",
+                  boxShadow: "0 0 6px #10B981",
+                }}
+              />
+              SYSTEM SCHEMA READY · ZERO STALE DEMOS
+            </div>
+          </div>
+        )}
 
         {/* ── Transition teaser → Playground ── */}
         <div
