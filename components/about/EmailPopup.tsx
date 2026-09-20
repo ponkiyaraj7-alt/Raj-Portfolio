@@ -70,36 +70,49 @@ export default function EmailPopup({
   useEffect(() => {
     if (!isOpen) return;
 
-    // Create a subtle success sound using Web Audio API
-    const audioContext = new (window.AudioContext ||
-      (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext)();
+    // Create a subtle success sound using Web Audio API safely
+    let audioContext: AudioContext | null = null;
+    try {
+      const AudioCtx = window.AudioContext ||
+        (window as unknown as { webkitAudioContext: typeof AudioContext }).webkitAudioContext;
+      if (AudioCtx) {
+        audioContext = new AudioCtx();
+      }
+    } catch {
+      audioContext = null;
+    }
 
+    if (!audioContext) return;
+
+    const ctx = audioContext;
     const playSound = () => {
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
+      try {
+        const oscillator = ctx.createOscillator();
+        const gainNode = ctx.createGain();
 
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
+        oscillator.connect(gainNode);
+        gainNode.connect(ctx.destination);
 
-      // Create a pleasant chime
-      oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-      oscillator.frequency.exponentialRampToValueAtTime(
-        659.25,
-        audioContext.currentTime + 0.1
-      ); // E5
+        // Create a pleasant chime
+        oscillator.frequency.setValueAtTime(523.25, ctx.currentTime); // C5
+        oscillator.frequency.exponentialRampToValueAtTime(
+          659.25,
+          ctx.currentTime + 0.1
+        ); // E5
 
-      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(
-        0.01,
-        audioContext.currentTime + 0.5
-      );
+        gainNode.gain.setValueAtTime(0.1, ctx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(
+          0.01,
+          ctx.currentTime + 0.5
+        );
 
-      oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.5);
+        oscillator.start(ctx.currentTime);
+        oscillator.stop(ctx.currentTime + 0.5);
+      } catch {}
     };
 
     // Only play if user has interacted with the page
-    if (audioContext.state === "running") {
+    if (ctx.state === "running") {
       playSound();
     } else {
       // Wait for user interaction
@@ -111,7 +124,9 @@ export default function EmailPopup({
     }
 
     return () => {
-      audioContext.close();
+      try {
+        ctx.close();
+      } catch {}
     };
   }, [isOpen]);
 

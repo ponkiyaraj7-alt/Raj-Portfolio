@@ -24,15 +24,21 @@ function getCtx(): AudioContext | null {
 
 export function initAudio() {
   if (typeof window === "undefined") return;
-  const stored = window.localStorage.getItem(STORAGE_KEY);
-  enabled = stored === "1";
+  try {
+    const stored = window.localStorage.getItem(STORAGE_KEY);
+    enabled = stored === "1";
+  } catch {
+    enabled = false;
+  }
 }
 
 export function setAudioEnabled(v: boolean) {
   enabled = v;
   userInitiated = true;
   if (typeof window !== "undefined") {
-    window.localStorage.setItem(STORAGE_KEY, v ? "1" : "0");
+    try {
+      window.localStorage.setItem(STORAGE_KEY, v ? "1" : "0");
+    } catch {}
   }
   if (v) {
     // Resume context on opt-in (autoplay policies)

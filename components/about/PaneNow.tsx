@@ -29,10 +29,12 @@ export default function PaneNow() {
   useEffect(() => {
     if (reduceMotion) { setTyped(true); return; }
     const KEY = "portfolio-about-typed";
-    if (typeof window !== "undefined" && sessionStorage.getItem(KEY)) {
-      setTyped(true);
-      return;
-    }
+    try {
+      if (typeof window !== "undefined" && sessionStorage.getItem(KEY)) {
+        setTyped(true);
+        return;
+      }
+    } catch {}
     const el = ref.current;
     if (!el) return;
     const obs = new IntersectionObserver(([e]) => {
@@ -40,7 +42,9 @@ export default function PaneNow() {
         // Trigger the reveal class which CSS will animate; mark done after duration
         setTimeout(() => {
           setTyped(true);
-          sessionStorage.setItem(KEY, "1");
+          try {
+            sessionStorage.setItem(KEY, "1");
+          } catch {}
         }, 1100);
         obs.disconnect();
       }
